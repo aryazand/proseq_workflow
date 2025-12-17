@@ -1,11 +1,16 @@
 # PROseq workflow
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥8.0.0-brightgreen.svg)](https://snakemake.github.io)
-[![GitHub actions status](https://github.com/<owner>/<repo>/workflows/Tests/badge.svg?branch=main)](https://github.com/<owner>/<repo>/actions?query=branch%3Amain+workflow%3ATests)
+[![GitHub actions status](https://github.com/<owner>/<repo>/workflows/Tests/badge.svg?branch=main)](https://github.com/aryazand/proseq_workflow/actions?query=branch%3Amain+workflow%3ATests)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/<owner>/<repo>)
 
-A Snakemake workflow for `<description>`
+A Snakemake workflow for processing PROseq data. It is an add-on to my [fastq-process-align](https://github.com/aryazand/fastq-process-align) workflow. This workflow will perform the following:
+
+  1. Preprocess FASTQ files, including adapter trimming, quality trimming/filtering, and UMI extraction
+  2. Align to the genome using standard tools (bowtie2, star, bwa, and minimap)
+  3. Deduplicate mapped reads
+  4. Identify transcription start regions
 
 - [Snakemake workflow: `<name>`](#snakemake-workflow-name)
   - [Usage](#usage)
@@ -52,10 +57,8 @@ snakemake --cores 2 --sdm conda apptainer --directory .test
 
 ## Authors
 
-- Firstname Lastname
-  - Affiliation
-  - ORCID profile
-  - home page
+- Arya Zandvakili
+  - [0000-0001-8031-8067](https://orcid.org/my-orcid?orcid=0000-0001-8031-8067)
 
 ## References
 
