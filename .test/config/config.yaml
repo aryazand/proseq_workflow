@@ -57,8 +57,15 @@ mapping_stats:
   rseqc_bam_stat:
     extra: ""
   deeptools_coverage:
-    genome_size: 1000
+    genome_size: 230000
     extra: ""
+
+tsrs:
+  tsrDetectR: 
+    method: "maxtss"
+    window: 11
+    background: 101
+    threshold: 0.99
 
 qc:
   multiqc:

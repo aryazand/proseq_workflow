@@ -1,8 +1,67 @@
-samplesheet: ".test/config/samples.tsv"
+samplesheet: "config/samples.tsv"
 
 get_genome:
-  ncbi_ftp: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/146/045/GCF_000146045.2_R64/GCF_000146045.2_R64_genomic.fna.gz
+  database: "ncbi"
+  assembly: "GCF_000307535.1"
+  fasta: Null
+  gff: Null
+  gff_source_type:
+    [
+      "RefSeq": "gene",
+      "RefSeq": "pseudogene",
+      "RefSeq": "CDS",
+      "Protein Homology": "CDS",
+    ]
 
-simulate_reads:
-  read_length: 100
-  read_number: 10000
+processing:
+  tool: "fastp"
+  fastp:
+    extra: ""
+  trim_galore:
+    extra: "--gzip --paired"
+  umi_tools_extract:
+    enabled: false  # Set to true to enable UMI extraction
+    extra: "--bc-pattern=NNNNNNNN --bc-pattern2=NNNNNNNN" 
+
+mapping:
+  tool: "bwa_mem2"
+  bowtie2:
+    index: ""
+    extra: ""
+  bwa_mem2:
+    extra: ""
+    sort: "samtools"
+    sort_order: "coordinate"
+    sort_extra: ""
+  star:
+    index: ""
+    extra: ""
+  minimap2:
+    index: ""
+    extra: "-ax map-ont"
+    sorting: "coordinate"
+    sort_extra: ""
+  samtools_sort:
+    extra: "-m 4G"
+  samtools_index:
+    extra: ""
+  umi_tools_dedup: 
+    enabled: false  # Set to true to enable deduplication
+    extra: "--paired"  # or directional, cluster, adjacency, etc.
+
+mapping_stats:
+  gffread:
+    extra: ""
+  rseqc_infer_experiment:
+    extra: ""
+  rseqc_bam_stat:
+    extra: ""
+  deeptools_coverage:
+    genome_size: 1000
+    extra: ""
+
+qc:
+  multiqc:
+    extra: "--verbose --dirs"
+  fastqc:
+    extra: "--quiet"
