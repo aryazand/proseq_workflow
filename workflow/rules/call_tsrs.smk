@@ -1,18 +1,18 @@
 rule call_tsrs:
     input:
-        "results/deeptools/5prime_coverage/{sample}_{strand}.bw"
+        "results/deeptools/5prime_coverage/{sample}_{strand}.bw",
     output:
-        "results/tsrs/{sample}_{strand}.bed"
+        "results/tsrs/{sample}_{strand}.bed",
     params:
-        method = config["tsrs"]["tsrDetectR"]["method"],
-        window = config["tsrs"]["tsrDetectR"]["window"],
-        background = config["tsrs"]["tsrDetectR"]["background"],
-        threshold = config["tsrs"]["tsrDetectR"]["threshold"],
-        basedir = workflow.basedir
+        method=config["tsrs"]["tsrDetectR"]["method"],
+        window=config["tsrs"]["tsrDetectR"]["window"],
+        background=config["tsrs"]["tsrDetectR"]["background"],
+        threshold=config["tsrs"]["tsrDetectR"]["threshold"],
+        basedir=workflow.basedir,
     conda:
         "../envs/tsr_detectr.yml"
     log:
-        "results/tsrs/{sample}_{strand}.log"
+        "results/tsrs/{sample}_{strand}.log",
     shell:
         """
         Rscript -e '
