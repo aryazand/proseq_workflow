@@ -15,8 +15,6 @@ rule call_tsrs:
         "results/tsrs/{sample}_{strand}.log",
     shell:
         """
-        export GITHUB_PAT="${GITHUB_PAT:-${GITHUB_TOKEN:-}}"
-
         Rscript -e '
         options(timeout = 600)
         
