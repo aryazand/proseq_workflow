@@ -17,8 +17,10 @@ rule call_tsrs:
         """
         Rscript -e '
         options(timeout = 600)
+        
         if (!requireNamespace("tsrDetectR", quietly=TRUE)) {{
           message("Installing tsrDetectR...")
+          export GITHUB_PAT=$GITHUB_PAT
           Sys.setenv(R_COMPILE_AND_INSTALL_PACKAGES="never")
           remotes::install_github("aryazand/tsrDetectR", upgrade="never", dependencies=TRUE)
         }}
