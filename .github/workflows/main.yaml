@@ -38,6 +38,9 @@ jobs:
     needs:
       - Linting
       - Formatting
+    env:
+      # Make the token visible inside Snakemake shells as GITHUB_PAT
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 

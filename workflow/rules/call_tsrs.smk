@@ -17,10 +17,11 @@ rule call_tsrs:
         """
         Rscript -e '
         options(timeout = 600)
+        
         if (!requireNamespace("tsrDetectR", quietly=TRUE)) {{
           message("Installing tsrDetectR...")
           Sys.setenv(R_COMPILE_AND_INSTALL_PACKAGES="never")
-          remotes::install_github("aryazand/tsrDetectR", upgrade="never", dependencies=TRUE)
+          remotes::install_github("aryazand/tsrDetectR", upgrade="never", dependencies=TRUE, INSTALL_opts = c("--no-lock"))
         }}
         '
         mkdir -p results/tsrs
