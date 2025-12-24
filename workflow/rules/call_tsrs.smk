@@ -7,9 +7,12 @@ rule call_tsrs:
         method = config["tsrs"]["tsrDetectR"]["method"],
         window = config["tsrs"]["tsrDetectR"]["window"],
         background = config["tsrs"]["tsrDetectR"]["background"],
-        threshold = config["tsrs"]["tsrDetectR"]["threshold"]
+        threshold = config["tsrs"]["tsrDetectR"]["threshold"],
+        basedir = workflow.basedir
     conda:
         "../envs/tsr_detectr.yml"
+    log:
+        "results/tsrs/{sample}_{strand}.log"
     shell:
         """
         Rscript -e '
@@ -21,5 +24,5 @@ rule call_tsrs:
         }}
         '
         mkdir -p results/tsrs
-        Rscript {workflow.basedir}/scripts/call_tsrs.R -m {params.method} -w {params.window} -b {params.background} -t {params.threshold} -s {wildcards.strand} -i {input} -o {output}
+        Rscript {params.basedir}/scripts/call_tsrs.R -m {params.method} -w {params.window} -b {params.background} -t {params.threshold} -s {wildcards.strand} -i {input} -o {output}
         """
