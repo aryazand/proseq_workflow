@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0 (2025-12-27)
+
+
+### Bug Fixes
+
+* added dependencies to allow tsrDetectR to install ([ccb2878](https://github.com/aryazand/proseq_workflow/commit/ccb2878d7731a36f79191e79fddee85e71cda175))
+* allow export of GITHUB_PAT to install tsrDetectR ([f210ebc](https://github.com/aryazand/proseq_workflow/commit/f210ebc787de222daea92dfe7b8c09ec9a90e2e1))
+* allow export of GITHUB_PAT to install tsrDetectR ([a00e90b](https://github.com/aryazand/proseq_workflow/commit/a00e90b550241fec7bd845c21e75b6f76058cff2))
+* allow tsrDetectR installation ([40d83f5](https://github.com/aryazand/proseq_workflow/commit/40d83f56df2760e78037fe27c9adebb084bf3de7))
+* correct typo in call_tsrs.smk ([6fbe6c9](https://github.com/aryazand/proseq_workflow/commit/6fbe6c9f67b3f65b563c452658dffbbf3a178d3d))
+* github actions to not install R globally ([43aa754](https://github.com/aryazand/proseq_workflow/commit/43aa7545b3a3013bdbedc934685e4a99709b8218))
+* install tsrDetectR error during github actions ([d01e436](https://github.com/aryazand/proseq_workflow/commit/d01e43673fcbbc6848fb0b52c4e88fc0f2b9d847))
+* log and params in call_tsrs ([a92e50b](https://github.com/aryazand/proseq_workflow/commit/a92e50b04d2bc107cd1e20ee92e21e0fbbb2c8e1))
+
 ## [1.1.0](https://github.com/snakemake-workflows/snakemake-workflow-template/compare/v1.0.0...v1.1.0) (2025-07-29)
 
 
