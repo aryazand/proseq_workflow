@@ -24,7 +24,7 @@ module fastq_process_align:
         config
 
 
-use rule * from fastq_process_align as fastq_process_align*
+use rule * from fastq_process_align as fastq_process_align_*
 
 
 include: "rules/coverage.smk"
