@@ -7,7 +7,6 @@ dependencies:
   - r-devtools
   - r-remotes
   - r-biocmanager
-  - r-optparse
   - r-purrr
   - r-dplyr
   - r-tidyselect

@@ -2,55 +2,42 @@
 # This R script calls tsrs based on commandline arguments
 ################################
 
+# Install required packages if not already installed
+if (!requireNamespace("tsrDetectR", quietly = TRUE)) {
+  message("Installing tsrDetectR...")
+  remotes::install_github("aryazand/tsrDetectR", upgrade="never", dependencies=TRUE, INSTALL_opts =c("--no-lock"))
+}
+
 ##################################
 # PROCESS COMMANDLINE ARGUMENTS
 ##################################
 
-library("optparse")
-
-parser <- OptionParser()
-parser <- add_option(parser, c("-m", "--method"), action="store", type="character",
-                    default="maxtss", help="method for identifying tsrs [default %maxtss]",
-                    metavar="character") 
-parser <- add_option(parser, c("-w", "--window"), action="store", type="integer",
-                    default=11, help="window size [default %11]",
-                    metavar="number") 
-parser <- add_option(parser, c("-b", "--background"), action="store", type="integer",
-                    default=101, help="window size for calculating background [default %101]",
-                    metavar="number")
-parser <- add_option(parser, c("-t", "--rel_threshold"), action="store", type="double",
-                    help="threshold value for calling TSR [no default]",
-                    metavar="number")
-parser <- add_option(parser, c("-i", "--in_file"), action="store", type="character",
-                    help="BigWig file to parse [no default]",
-                    metavar="character")
-parser <- add_option(parser, c("-o", "--out_file"), action="store", type="character",
-                    help="output BED file [no default]",
-                    metavar="character")
-parser <- add_option(parser, c("-s", "--strand"), action="store", type="character",
-                    help="strand [no default]",
-                    metavar="character")
-
-parsed_args <- parse_args(parser)
+in_file = snakemake@input[[1]]
+out_file = snakemake@output[[1]]
+strand = snakemake@wildcards[["strand"]]
+param_method = snakemake@config[["tsrs"]][["tsrDetectR"]][["method"]]
+param_window = snakemake@config[["tsrs"]][["tsrDetectR"]][["window"]]
+param_background = snakemake@config[["tsrs"]][["tsrDetectR"]][["background"]]
+param_threshold = snakemake@config[["tsrs"]][["tsrDetectR"]][["threshold"]]
 
 ################################
 # CALL TSRs
 ################################
 
-input_bw <- rtracklayer::import.bw(parsed_args$in_file, as = "RleList")
+input_bw <- rtracklayer::import.bw(in_file, as = "RleList")
 
-if(parsed_args$method == "maxtss"){
+if(param_method == "maxtss"){
 
   tsr_func <- function(i){
     tsrs <- tsrDetectR::findtsr_maxtss(x = input_bw[[i]],
-                          w = parsed_args$window,
-                          background = parsed_args$background,
-                          rel_threshold = parsed_args$rel_threshold)  
+                          w = param_window,
+                          background = param_background,
+                          rel_threshold = param_threshold)  
     
     GenomicRanges::GRanges(
       seqnames = i,
       ranges = tsrs,
-      strand = ifelse(parsed_args$strand == "plus", "+", "-")
+      strand = ifelse(strand %in% c("plus", "forward", "for"), "+", "-")
     )
   }
 
@@ -62,4 +49,4 @@ if(parsed_args$method == "maxtss"){
 tsrs <- do.call(c, tsrs)
 
 # Export to BED file
-rtracklayer::export.bed(tsrs, con = parsed_args$out_file)
+rtracklayer::export.bed(tsrs, con = out_file)
