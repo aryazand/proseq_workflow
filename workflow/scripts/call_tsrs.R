@@ -9,7 +9,7 @@ if (!requireNamespace("tsrDetectR", quietly = TRUE)) {
 }
 
 ##################################
-# PROCESS COMMANDLINE ARGUMENTS
+# PROCESS INPUT ARGUMENTS FROM SNAKEMAKE
 ##################################
 
 in_file = snakemake@input[[1]]
@@ -20,11 +20,30 @@ param_window = snakemake@config[["tsrs"]][["tsrDetectR"]][["window"]]
 param_background = snakemake@config[["tsrs"]][["tsrDetectR"]][["background"]]
 param_threshold = snakemake@config[["tsrs"]][["tsrDetectR"]][["threshold"]]
 
+if (exists(snakemake@config[["tsrs"]][["tsrDetectR"]][["regex"]])) {
+  param_regex = snakemake@config[["tsrs"]][["tsrDetectR"]][["regex"]]
+  if (is.null(param_regex) || param_regex == "") {
+    param_regex = ".*"
+  }
+} else {
+  param_regex = ".*"
+}
+
 ################################
-# CALL TSRs
+# LOAD COVERAGE DATA
 ################################
 
 input_bw <- rtracklayer::import.bw(in_file, as = "RleList")
+
+# Filter bw 
+names_match <- grepl(param_regex, names(input_bw))
+input_bw <- input_bw[names_match]
+input_bw <- input_bw[sapply(input_bw, sum) > 0]
+
+
+################################
+# CALL TSRs
+################################
 
 if(param_method == "maxtss"){
 
