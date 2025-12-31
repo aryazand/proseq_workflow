@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.0.0 (2025-12-31)
+
+
+### Features
+
+* consolidate tsrs ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+
+
+### Bug Fixes
+
+* added dependencies to allow tsrDetectR to install ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* allow export of GITHUB_PAT to install tsrDetectR ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* allow export of GITHUB_PAT to install tsrDetectR ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* allow proper install of tsrDetectR ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* allow tsrDetectR installation ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* call_tsrs as script rather than a shell ([b2da0ac](https://github.com/aryazand/proseq_workflow/commit/b2da0acac10fc3cefca6fa6bd8c48145c729e7fc))
+* correct typo in call_tsrs.smk ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* formatting ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* github actions to not install R globally ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* handle chr with no coverage. feat: filter chr by name pattern ([64b75f3](https://github.com/aryazand/proseq_workflow/commit/64b75f3d7d1d58404d6ca310dd9418d684951e07))
+* install tsrDetectR error during github actions ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* install tsrDetectR properly ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* log and params in call_tsrs ([a92e50b](https://github.com/aryazand/proseq_workflow/commit/a92e50b04d2bc107cd1e20ee92e21e0fbbb2c8e1))
+* remove seting sys env variable ([b2da0ac](https://github.com/aryazand/proseq_workflow/commit/b2da0acac10fc3cefca6fa6bd8c48145c729e7fc))
+
 ## [1.1.0](https://github.com/snakemake-workflows/snakemake-workflow-template/compare/v1.0.0...v1.1.0) (2025-07-29)
 
 
