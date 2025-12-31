@@ -60,6 +60,14 @@ mapping_stats:
     genome_size: 1000
     extra: ""
 
+tsrs:
+  tsrDetectR:
+    method: "maxtss"
+    window: 11
+    background: 101
+    threshold: 0.99
+    regex: ""
+
 qc:
   multiqc:
     extra: "--verbose --dirs"
