@@ -14,13 +14,13 @@ if (!requireNamespace("tsrDetectR", quietly = TRUE)) {
 
 in_file = snakemake@input[[1]]
 out_file = snakemake@output[[1]]
-strand = snakemake@wildcards[["strand"]]
+param_strand = snakemake@wildcards[["strand"]]
 param_method = snakemake@config[["tsrs"]][["tsrDetectR"]][["method"]]
 param_window = snakemake@config[["tsrs"]][["tsrDetectR"]][["window"]]
 param_background = snakemake@config[["tsrs"]][["tsrDetectR"]][["background"]]
 param_threshold = snakemake@config[["tsrs"]][["tsrDetectR"]][["threshold"]]
 
-if (exists(snakemake@config[["tsrs"]][["tsrDetectR"]][["regex"]])) {
+if ("regex" %in% names(snakemake@config[["tsrs"]][["tsrDetectR"]])) {
   param_regex = snakemake@config[["tsrs"]][["tsrDetectR"]][["regex"]]
   if (is.null(param_regex) || param_regex == "") {
     param_regex = ".*"
@@ -56,7 +56,7 @@ if(param_method == "maxtss"){
     GenomicRanges::GRanges(
       seqnames = i,
       ranges = tsrs,
-      strand = ifelse(strand %in% c("plus", "forward", "for"), "+", "-")
+      strand = ifelse(param_strand %in% c("plus", "forward", "for"), "+", "-")
     )
   }
 
