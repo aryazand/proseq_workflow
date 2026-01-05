@@ -52,4 +52,5 @@ onerror:
 rule all:
     input:
         "results/tsrs/TSRs.bed",
+        "results/multiqc/multiqc_report.html"       
     default_target: True
