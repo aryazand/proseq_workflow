@@ -52,7 +52,7 @@ rule deeptools_5prime_coverage_forward:
             "genome_size"
         ],
         extra=config["mapping_stats"]["deeptools_coverage"]["extra"]
-        + "--Offset 1 --filterRNAstrand forward",
+        + " --Offset 1 --filterRNAstrand forward",
     log:
         "results/deeptools/5prime_coverage/{sample}_forward.log",
     message:
@@ -73,7 +73,7 @@ rule deeptools_5prime_coverage_reverse:
             "genome_size"
         ],
         extra=config["mapping_stats"]["deeptools_coverage"]["extra"]
-        + "--Offset 1 --filterRNAstrand reverse",
+        + " --Offset 1 --filterRNAstrand reverse",
     log:
         "results/deeptools/5prime_coverage/{sample}_reverse.log",
     message:
