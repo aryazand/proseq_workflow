@@ -383,13 +383,13 @@ KF297339.1	Genbank	CDS	231078	231563	.	+	0	ID=cds-AGQ47383.1;Parent=gene-US31;Db
 KF297339.1	Genbank	gene	231681	232232	.	+	.	ID=gene-US32;Name=US32;gbkey=Gene;gene=US32;gene_biotype=protein_coding
 KF297339.1	Genbank	CDS	231681	232232	.	+	0	ID=cds-AGQ47384.1;Parent=gene-US32;Dbxref=NCBI_GP:AGQ47384.1;Name=AGQ47384.1;Note=US1 family;gbkey=CDS;gene=US32;product=protein US32;protein_id=AGQ47384.1
 KF297339.1	Genbank	inverted_repeat	232176	237683	.	+	.	ID=id-KF297339.1:232176..237683;Note=TRS;gbkey=repeat_region;rpt_type=inverted
-KF297339.1	Genbank	gene	232434	232607	.	+	.	ID=gene-US33A-2;Name=US33A;gbkey=Gene;gene=US33A;gene_biotype=protein_coding
+KF297339.1	Genbank	gene	232434	232607	.	+	.	ID=gene-US33A-2;Name=US33A-2;gbkey=Gene;gene=US33A;gene_biotype=protein_coding
 KF297339.1	Genbank	CDS	232434	232607	.	+	0	ID=cds-AGQ47389.1;Parent=gene-US33A-2;Dbxref=NCBI_GP:AGQ47389.1;Name=AGQ47389.1;gbkey=CDS;gene=US33A;product=protein US33A;protein_id=AGQ47389.1
-KF297339.1	Genbank	gene	232776	233267	.	+	.	ID=gene-US34-2;Name=US34;gbkey=Gene;gene=US34;gene_biotype=protein_coding
+KF297339.1	Genbank	gene	232776	233267	.	+	.	ID=gene-US34-2;Name=US34-2;gbkey=Gene;gene=US34;gene_biotype=protein_coding
 KF297339.1	Genbank	CDS	232776	233267	.	+	0	ID=cds-AGQ47385.1;Parent=gene-US34-2;Dbxref=NCBI_GP:AGQ47385.1;Name=AGQ47385.1;gbkey=CDS;gene=US34;product=protein US34;protein_id=AGQ47385.1
-KF297339.1	Genbank	gene	233261	233455	.	+	.	ID=gene-US34A-2;Name=US34A;gbkey=Gene;gene=US34A;gene_biotype=protein_coding
+KF297339.1	Genbank	gene	233261	233455	.	+	.	ID=gene-US34A-2;Name=US34A-2;gbkey=Gene;gene=US34A;gene_biotype=protein_coding
 KF297339.1	Genbank	CDS	233261	233455	.	+	0	ID=cds-AGQ47386.1;Parent=gene-US34A-2;Dbxref=NCBI_GP:AGQ47386.1;Name=AGQ47386.1;gbkey=CDS;gene=US34A;product=protein US34A;protein_id=AGQ47386.1
-KF297339.1	Genbank	gene	234355	236721	.	-	.	ID=gene-TRS1-2;Name=TRS1;Note=possible beta gene%3B immediate early gene;gbkey=Gene;gene=TRS1;gene_biotype=protein_coding
+KF297339.1	Genbank	gene	234355	236721	.	-	.	ID=gene-TRS1-2;Name=TRS1-2;Note=possible beta gene%3B immediate early gene;gbkey=Gene;gene=TRS1;gene_biotype=protein_coding
 KF297339.1	Genbank	CDS	234355	236721	.	-	0	ID=cds-AGQ47387.1;Parent=gene-TRS1-2;Dbxref=NCBI_GP:AGQ47387.1;Name=AGQ47387.1;Note=US22 family;gbkey=CDS;gene=TRS1;product=tegument protein TRS1;protein_id=AGQ47387.1
 KF297339.1	Genbank	repeat_region	236986	237683	.	+	.	ID=id-KF297339.1:236986..237683;Note='a' sequence;gbkey=repeat_region;rpt_type=terminal
 KF297339.1	Genbank	sequence_feature	237683	237683	.	+	.	ID=id-KF297339.1:237683..237683;Note=unpaired T residue at 3'-end of upper strand%3B complementary to unpaired A residue at 3'-end of lower strand;gbkey=misc_feature

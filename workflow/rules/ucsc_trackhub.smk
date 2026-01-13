@@ -11,7 +11,7 @@ rule get_chr_sizes:
         """
 
 
-rule bed_to_bigbed:
+rule bed_to_bigBed:
     input:
         bed="results/tsrs/TSRs.bed",
         chrom_sizes="results/get_genome/genome.chrom.sizes",
@@ -27,8 +27,49 @@ rule bed_to_bigbed:
         """
 
 
+rule gff3_to_GenePred:
+    input:
+        gff="results/get_genome/genome.gff",
+    output:
+        genePred="results/get_genome/genome.GenePred",
+    conda:
+        "../envs/ucsc_tools.yaml"
+    log:
+        "results/get_genome/gff3_to_GenePred.log",
+    shell:
+        """
+        gff3ToGenePred {input.gff} {output.genePred}
+        """
+
+
+rule GenePred_to_bigGenePred:
+    input:
+        GenePred="results/get_genome/genome.GenePred",
+    output:
+        bigGenePred="results/get_genome/genome.bb",
+    conda:
+        "../envs/ucsc_tools.yaml"
+    log:
+        "results/get_genome/GenePred_to_bigGenePred.log",
+    shell:
+        """
+        genePredToBigGenePred {input.GenePred} {output.bigGenePred}
+        """
+
+rule faToTwoBit:
+    input:
+        "results/get_genome/genome.fasta"
+    output:
+        "results/get_genome/genome.2bit"
+    log:
+        "results/get_genome/fa_to_2bit.log"
+    wrapper:
+        "v7.1.0/bio/ucsc/faToTwoBit"
+
 rule ucsc_trackhub:
     input:
+        genome_2bit="results/get_genome/genome.2bit",
+        genome_genePred="results/get_genome/genome.bb",
         tsrs="results/tsrs/TSRs.bb",
         bw=lambda wildcards: expand(
             "results/deeptools/5prime_coverage/{sample}_{strand}.bw",
@@ -37,8 +78,9 @@ rule ucsc_trackhub:
         ),
     output:
         dir=directory(trackhub_dir),
-        trackdb=os.path.join(
-            trackhub_dir, config["ucsc_trackhub"]["genome"], "trackDb.txt"
+        trackdb=expand(
+            os.path.join(trackhub_dir, "{org}", "trackDb.txt"),
+            org = config["ucsc_trackhub"]["genomes"]
         ),
         hubtxt=os.path.join(
             trackhub_dir, config["ucsc_trackhub"]["hub_name"] + ".hub.txt"
@@ -50,12 +92,5 @@ rule ucsc_trackhub:
         "../envs/trackhub.yaml"
     log:
         os.path.join(trackhub_dir, "trackhub.log"),
-    params:
-        hub_name=config["ucsc_trackhub"]["hub_name"],
-        defaultPos=config["ucsc_trackhub"]["defaultPos"],
-        short_label=config["ucsc_trackhub"]["short_label"],
-        long_label=config["ucsc_trackhub"]["long_label"],
-        genome=config["ucsc_trackhub"]["genome"],
-        email=config["ucsc_trackhub"]["email"],
     script:
         "../scripts/trackhub.py"

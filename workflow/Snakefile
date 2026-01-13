@@ -57,5 +57,8 @@ rule all:
     input:
         "results/tsrs/TSRs.bed",
         "results/multiqc/multiqc_report.html",
-        os.path.join(trackhub_dir, config["ucsc_trackhub"]["genome"], "trackDb.txt"),
+        expand(
+            os.path.join(trackhub_dir, "{org}", "trackDb.txt"),
+            org = config["ucsc_trackhub"]["genomes"]
+        ),
     default_target: True
