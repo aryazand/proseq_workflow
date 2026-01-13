@@ -7,9 +7,9 @@ get_genome:
   gff: "data/genome/KF297339.1.gff"
   gff_source_type:
     [
-      "RefSeq": "gene",
-      "RefSeq": "pseudogene",
-      "RefSeq": "CDS",
+      "Genbank": "gene",
+      "Genbank": "pseudogene",
+      "Genbank": "CDS",
       "Protein Homology": "CDS",
     ]
 
@@ -24,7 +24,7 @@ processing:
     extra: "--bc-pattern=NNNNNNNN --bc-pattern2=NNNNNNNN"
 
 mapping:
-  tool: "bwa_mem2"
+  tool: "star"
   bowtie2:
     index: ""
     extra: ""
@@ -34,7 +34,7 @@ mapping:
     sort_order: "coordinate"
     sort_extra: ""
   star:
-    index: ""
+    index: "--genomeSAindexNbases 7"
     extra: ""
   minimap2:
     index: ""
@@ -72,3 +72,20 @@ qc:
     extra: "--verbose --dirs"
   fastqc:
     extra: "--quiet"
+
+ucsc_trackhub:
+  hub_name: "test"
+  email: "aryazand@test.org"
+  short_label: "TEST trackhub"
+  long_label: "TEST trackhub"
+  genomes:
+    KF297339.1:
+      defaultPos: "KF297339.1:1-20000"
+      organism: "Human Cytomegalovirus"
+      scientificName: "Human Herpesvirus 5 strain TB40E"
+      description: "HCMV TB40E, clone Lisa"
+      html_string: "HCMV TB40E, clone Lisa (html string)"
+      annotation:
+        track_name: "TB40"
+        short_label: "HCMV TB40E"
+        long_label: "HCMV TB40E, clone Lisa"
