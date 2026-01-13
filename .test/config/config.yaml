@@ -24,7 +24,7 @@ processing:
     extra: "--bc-pattern=NNNNNNNN --bc-pattern2=NNNNNNNN"
 
 mapping:
-  tool: "bwa_mem2"
+  tool: "star"
   bowtie2:
     index: ""
     extra: ""
@@ -34,7 +34,7 @@ mapping:
     sort_order: "coordinate"
     sort_extra: ""
   star:
-    index: ""
+    index: "--genomeSAindexNbases 7"
     extra: ""
   minimap2:
     index: ""
@@ -72,3 +72,11 @@ qc:
     extra: "--verbose --dirs"
   fastqc:
     extra: "--quiet"
+
+ucsc_trackhub:
+  hub_name: "test"
+  defaultPos: "KF297339.1:1-20000"
+  short_label: "TEST trackhub"
+  long_label: "TEST trackhub"
+  genome: "HCMV TB40e BAC4 SV40-GFP"
+  email: "aryazand@test.org"

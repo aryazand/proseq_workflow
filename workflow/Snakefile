@@ -27,8 +27,12 @@ module fastq_process_align:
 use rule * from fastq_process_align as fastq_process_align_*
 
 
+trackhub_dir = "genome_browser/ucsc_trackhub/"
+
+
 include: "rules/coverage.smk"
 include: "rules/call_tsrs.smk"
+include: "rules/ucsc_trackhub.smk"
 
 
 # optional messages, log and error handling
@@ -53,4 +57,5 @@ rule all:
     input:
         "results/tsrs/TSRs.bed",
         "results/multiqc/multiqc_report.html",
+        os.path.join(trackhub_dir, config["ucsc_trackhub"]["genome"], "trackDb.txt"),
     default_target: True
