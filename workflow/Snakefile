@@ -55,12 +55,6 @@ onerror:
 
 rule all:
     input:
-        expand(
-            "results/deeptools/{coverage_type}/{sample}_{strand}.bw",
-            coverage_type=["coverage", "5prime_coverage"],
-            sample=fastq_process_align.samples.index,
-            strand=["forward", "reverse"],
-        ),
         "results/tsrs/TSRs.bed",
         "results/multiqc/multiqc_report.html",
         expand(
