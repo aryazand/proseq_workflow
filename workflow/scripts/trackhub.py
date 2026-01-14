@@ -80,6 +80,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             shortLabel=bw_name,
             longLabel=bw_name,
             visibility="full",
+            autoScale="on",
             color="0,0,100"
         )
 
@@ -96,6 +97,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             shortLabel=bw_name,
             longLabel=bw_name,
             visibility="full",
+            autoScale="on",
             negateValues="on",
             color="113,35,124"
         )
