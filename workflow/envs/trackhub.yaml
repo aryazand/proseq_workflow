@@ -3,6 +3,8 @@ channels:
   - bioconda
   - conda-forge
   - defaults
+channel_priority: flexible
+
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -51,4 +53,3 @@ dependencies:
   - urllib3=2.6.3=pyhd8ed1ab_0
   - webencodings=0.5.1=pyhd8ed1ab_3
   - zstd=1.5.7=hb78ec9c_6
-prefix: /home/arya/miniforge3/envs/trackhub

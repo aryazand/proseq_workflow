@@ -3,6 +3,8 @@ channels:
   - bioconda
   - conda-forge
   - defaults
+channel_priority: flexible
+
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -35,4 +37,3 @@ dependencies:
   - ucsc-genepredtobiggenepred=482=h0b57e2e_0
   - ucsc-gff3togenepred=482=h0b57e2e_0
   - zstd=1.5.7=hb78ec9c_6
-prefix: /home/arya/miniforge3/envs/ucsc_tools
