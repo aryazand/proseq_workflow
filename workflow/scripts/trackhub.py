@@ -54,6 +54,8 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         visibility="pack",
     )
 
+    trackdb.add_tracks(genome_model)
+
     # Add TSRs track
     tsr_track = trackhub.Track(
         name="TSRs",
