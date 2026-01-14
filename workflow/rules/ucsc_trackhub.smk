@@ -42,18 +42,34 @@ rule gff3_to_GenePred:
         """
 
 
-rule GenePred_to_bigGenePred:
+rule GenePred_to_bgpInput:
     input:
         GenePred="results/get_genome/genome.GenePred",
+    output:
+        bgpInput="results/get_genome/genome.bgpInput",
+    conda:
+        "../envs/ucsc_tools.yaml"
+    log:
+        "results/get_genome/GenePred_to_bgpInput.log",
+    shell:
+        """
+         genePredToBigGenePred {input.GenePred} stdout | sort -k1,1 -k2,2n > {output.bgpInput}
+        """
+
+
+rule bgpInput_to_bigGenePred:
+    input:
+        bgpInput="results/get_genome/genome.bgpInput",
+        chrom_sizes="results/get_genome/genome.chrom.sizes",
     output:
         bigGenePred="results/get_genome/genome.bb",
     conda:
         "../envs/ucsc_tools.yaml"
     log:
-        "results/get_genome/GenePred_to_bigGenePred.log",
+        "results/get_genome/bgpInput_to_bigGenePred.log",
     shell:
         """
-        genePredToBigGenePred {input.GenePred} {output.bigGenePred}
+        bedToBigBed -type=bed12+8 -tab {input.bgpInput} {input.chrom_sizes} {output.bigGenePred}
         """
 
 
@@ -74,11 +90,13 @@ rule ucsc_trackhub:
         genome_genePred="results/get_genome/genome.bb",
         tsrs="results/tsrs/TSRs.bb",
         plus_bw=lambda wildcards: expand(
-            "results/deeptools/5prime_coverage/{sample}_forward.bw",
+            "results/deeptools/{coverage}/{sample}_forward.bw",
+            coverage=["coverage", "5prime_coverage"],
             sample=fastq_process_align.samples.index,
         ),
         minus_bw=lambda wildcards: expand(
-            "results/deeptools/5prime_coverage/{sample}_reverse.bw",
+            "results/deeptools/{coverage}/{sample}_reverse.bw",
+            coverage=["coverage", "5prime_coverage"],
             sample=fastq_process_align.samples.index,
         ),
     output:
