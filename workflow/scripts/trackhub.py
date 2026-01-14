@@ -99,7 +99,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             visibility="full",
             autoScale="on",
             negateValues="on",
-            color="113,35,124"
+            color="255,165,0"
         )
 
         trackdb.add_tracks(bw_track)
