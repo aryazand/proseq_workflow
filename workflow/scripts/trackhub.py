@@ -56,9 +56,34 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
 
     trackdb.add_tracks(genome_model)
 
+    # Add Stringtie Annotation track
+    stringtie_track = trackhub.Track(
+        name=snakemake.config["ucsc_trackhub"]["process_stringtie"]["track_name"],
+        tracktype="bigBed",
+        source=os.path.abspath(snakemake.input.stringtie),
+        shortLabel=snakemake.config["ucsc_trackhub"]["process_stringtie"]["shortLabel"],
+        longLabel=snakemake.config["ucsc_trackhub"]["process_stringtie"]["longLabel"],
+        visibility="dense",
+    )
+
+    trackdb.add_tracks(stringtie_track)
+
+    # Add gffcompare Annotation track
+    gffcompare_track = trackhub.Track(
+        name=snakemake.config["ucsc_trackhub"]["process_gffcompare"]["track_name"],
+        tracktype="bigBed",
+        source=os.path.abspath(snakemake.input.gffcompare),
+        shortLabel=snakemake.config["ucsc_trackhub"]["process_gffcompare"]["shortLabel"],
+        longLabel=snakemake.config["ucsc_trackhub"]["process_gffcompare"]["longLabel"],
+        visibility="dense",
+    )
+
+    trackdb.add_tracks(gffcompare_track)
+    
     #######################
     # Add TSRs to trackdb.txt
     #######################
+
 
     tsr_track = trackhub.Track(
         name="TSRs",
