@@ -88,7 +88,7 @@ ucsc_trackhub:
     faToTwoBit: ""
   process_bw:
     plus_color: "0,0,100"
-    minus_color: "255,165,0"
+    minus_color: "255,0,0"
     negateValues_for_minus_strand: "on" # on or off
   genomes:
     KF297339.1:
