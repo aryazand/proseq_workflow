@@ -11,19 +11,21 @@ rule get_chr_sizes:
         """
 
 
-rule bed_to_bigBed:
+rule tsr_bed_to_bigBed:
     input:
         bed="results/tsrs/TSRs.bed",
         chrom_sizes="results/get_genome/genome.chrom.sizes",
     output:
         bigbed="results/tsrs/TSRs.bb",
+    params:
+        extra=config["ucsc_trackhub"]["process_tsrs"]["tsr_bed_to_bigBed"],
     conda:
         "../envs/ucsc_tools.yaml"
     log:
         "results/tsrs/bigbed.log",
     shell:
         """
-        bedToBigBed {input.bed} {input.chrom_sizes} {output.bigbed}
+        bedToBigBed {params.extra} {input.bed} {input.chrom_sizes} {output.bigbed}
         """
 
 
@@ -32,13 +34,15 @@ rule gff3_to_GenePred:
         gff="results/get_genome/genome.gff",
     output:
         genePred="results/get_genome/genome.GenePred",
+    params:
+        extra=config["ucsc_trackhub"]["process_genome_annotation"]["gff3_to_GenePred"],
     conda:
         "../envs/ucsc_tools.yaml"
     log:
         "results/get_genome/gff3_to_GenePred.log",
     shell:
         """
-        gff3ToGenePred {input.gff} {output.genePred}
+        gff3ToGenePred {params.extra} {input.gff} {output.genePred}
         """
 
 
@@ -47,13 +51,17 @@ rule GenePred_to_bgpInput:
         GenePred="results/get_genome/genome.GenePred",
     output:
         bgpInput="results/get_genome/genome.bgpInput",
+    params:
+        extra=config["ucsc_trackhub"]["process_genome_annotation"][
+            "GenePred_to_bgpInput"
+        ],
     conda:
         "../envs/ucsc_tools.yaml"
     log:
         "results/get_genome/GenePred_to_bgpInput.log",
     shell:
         """
-         genePredToBigGenePred {input.GenePred} stdout | sort -k1,1 -k2,2n > {output.bgpInput}
+         genePredToBigGenePred {params.extra} {input.GenePred} stdout | sort -k1,1 -k2,2n > {output.bgpInput}
         """
 
 
@@ -63,13 +71,17 @@ rule bgpInput_to_bigGenePred:
         chrom_sizes="results/get_genome/genome.chrom.sizes",
     output:
         bigGenePred="results/get_genome/genome.bb",
+    params:
+        extra=config["ucsc_trackhub"]["process_genome_annotation"][
+            "bgpInput_to_bigGenePred"
+        ],
     conda:
         "../envs/ucsc_tools.yaml"
     log:
         "results/get_genome/bgpInput_to_bigGenePred.log",
     shell:
         """
-        bedToBigBed -type=bed12+8 -tab {input.bgpInput} {input.chrom_sizes} {output.bigGenePred}
+        bedToBigBed {params.extra} {input.bgpInput} {input.chrom_sizes} {output.bigGenePred}
         """
 
 
@@ -78,6 +90,8 @@ rule faToTwoBit:
         "results/get_genome/genome.fasta",
     output:
         "results/get_genome/genome.2bit",
+    params:
+        extra=config["ucsc_trackhub"]["process_fasta"]["faToTwoBit"],
     log:
         "results/get_genome/fa_to_2bit.log",
     wrapper:

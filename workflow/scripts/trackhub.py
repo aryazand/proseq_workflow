@@ -81,7 +81,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name,
             visibility="full",
             autoScale="on",
-            color="0,0,100"
+            color=snakemake.config["ucsc_trackhub"]["process_bw"]["plus_color"]
         )
 
         trackdb.add_tracks(bw_track)
@@ -98,8 +98,8 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name,
             visibility="full",
             autoScale="on",
-            negateValues="on",
-            color="255,165,0"
+            negateValues=snakemake.config["ucsc_trackhub"]["process_bw"]["negateValues_for_minus_strand"],
+            color=snakemake.config["ucsc_trackhub"]["process_bw"]["minus_color"]
         )
 
         trackdb.add_tracks(bw_track)

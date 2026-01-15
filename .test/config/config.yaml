@@ -78,6 +78,18 @@ ucsc_trackhub:
   email: "aryazand@test.org"
   short_label: "TEST trackhub"
   long_label: "TEST trackhub"
+  process_tsrs:
+    tsr_bed_to_bigBed: "" #bedToBigBed
+  process_genome_annotation:
+    gff3_to_GenePred: "-rnaNameAttr=gene" #gff3ToGenePred
+    GenePred_to_bgpInput: "" #genePredToBigGenePred
+    bgpInput_to_bigGenePred: "-type=bed12+8 -tab" #bedToBigBed
+  process_fasta:
+    faToTwoBit: ""
+  process_bw:
+    plus_color: "0,0,100"
+    minus_color: "255,165,0"
+    negateValues_for_minus_strand: "on" # on or off
   genomes:
     KF297339.1:
       defaultPos: "KF297339.1:1-20000"
