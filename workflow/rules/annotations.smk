@@ -43,9 +43,7 @@ rule stringtie_merge:
 
 rule gff_compare:
     input:
-        gtfs=expand(
-            "results/stringtie/{sample}.gtf", sample=fastq_process_align.samples.index
-        ),
+        stringtie_merge="results/stringtie/stringtie_merged.gtf",
         ref_gff="results/get_genome/genome.gff",
     output:
         gtf="results/gffcompare/gffcmp.annotated.gtf",
@@ -58,5 +56,5 @@ rule gff_compare:
         "results/gffcompare/gffcompare.log",
     shell:
         """
-        gffcompare {params.extra} -o {params.output_prefix} -r {input.ref_gff} {input.gtfs}
+        gffcompare {params.extra} -o {params.output_prefix} -r {input.ref_gff} {input.stringtie_merge}
         """
