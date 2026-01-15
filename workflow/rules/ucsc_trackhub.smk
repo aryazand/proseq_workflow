@@ -103,14 +103,20 @@ rule ucsc_trackhub:
         genome_2bit="results/get_genome/genome.2bit",
         genome_genePred="results/get_genome/genome.bb",
         tsrs="results/tsrs/TSRs.bb",
+        fiveprime_plus_bw=lambda wildcards: expand(
+            "results/deeptools/5prime_coverage/{sample}_forward.bw",
+            sample=fastq_process_align.samples.index,
+        ),
+        fiveprime_minus_bw=lambda wildcards: expand(
+            "results/deeptools/5prime_coverage/{sample}_reverse.bw",
+            sample=fastq_process_align.samples.index,
+        ),
         plus_bw=lambda wildcards: expand(
-            "results/deeptools/{coverage}/{sample}_forward.bw",
-            coverage=["coverage", "5prime_coverage"],
+            "results/deeptools/coverage/{sample}_forward.bw",
             sample=fastq_process_align.samples.index,
         ),
         minus_bw=lambda wildcards: expand(
-            "results/deeptools/{coverage}/{sample}_reverse.bw",
-            coverage=["coverage", "5prime_coverage"],
+            "results/deeptools/coverage/{sample}_reverse.bw",
             sample=fastq_process_align.samples.index,
         ),
     output:

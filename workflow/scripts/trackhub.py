@@ -69,6 +69,41 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     trackdb.add_tracks(tsr_track)
 
     # Loop through bigwig files in snakemake.input.bw and add to trackhub
+    for bw in snakemake.input.fiveprime_plus_bw:
+        bw_basename=os.path.basename(bw)
+        bw_name=os.path.splitext(bw_basename)[0]
+
+        bw_track = trackhub.Track(
+            name=bw_name + "_fiveprime",
+            tracktype="bigWig",
+            source=os.path.abspath(bw),
+            shortLabel=bw_name + ("(5')"),
+            longLabel=bw_name + ("(5' ends)"),
+            visibility="full",
+            autoScale="on",
+            color=snakemake.config["ucsc_trackhub"]["process_bw"]["plus_color"]
+        )
+
+        trackdb.add_tracks(bw_track)
+
+    for bw in snakemake.input.fiveprime_minus_bw:
+        bw_basename=os.path.basename(bw)
+        bw_name=os.path.splitext(bw_basename)[0]
+
+        bw_track = trackhub.Track(
+            name=bw_name + "_fiveprime",
+            tracktype="bigWig",
+            source=os.path.abspath(bw),
+            shortLabel=bw_name + ("(5')"),
+            longLabel=bw_name + ("(5' ends)"),
+            visibility="full",
+            autoScale="on",
+            negateValues=snakemake.config["ucsc_trackhub"]["process_bw"]["negateValues_for_minus_strand"],
+            color=snakemake.config["ucsc_trackhub"]["process_bw"]["minus_color"]
+        )
+
+        trackdb.add_tracks(bw_track)
+
     for bw in snakemake.input.plus_bw:
         bw_basename=os.path.basename(bw)
         bw_name=os.path.splitext(bw_basename)[0]
