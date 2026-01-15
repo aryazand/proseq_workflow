@@ -60,6 +60,16 @@ mapping_stats:
     genome_size: 230000
     extra: ""
 
+annotation:
+  stringtie:
+    ref_anno: "data/genome/KF297339.1.gff"
+    strandedness: ""
+    extra: "--nasc" #Keeps non poly-A RNA for output
+  stringtie_merge:
+    extra: ""
+  gffcompare:
+    extra: ""
+
 tsrs:
   tsrDetectR:
     method: "maxtss"
@@ -82,6 +92,20 @@ ucsc_trackhub:
   group_label: "Testing"
   process_tsrs:
     tsr_bed_to_bigBed: "" #bedToBigBed
+  process_stringtie:
+    track_name: "annotation_track_stringtie"
+    shortLabel: "annotations from RNA-seq (stringtie)"
+    longLabel: "annotations from RNA-seq (stringtie)"
+    gtf_to_genePred: ""
+    GenePred_to_bgpInput: ""
+    bgpInput_to_bigGenePred: "-type=bed12+8 -tab"
+  process_gffcompare:
+    track_name: "annotation_track_gffcompare"
+    shortLabel: "annotations from RNA-seq (gffcompare)"
+    longLabel: "annotations from RNA-seq (gffcompare)"
+    gtf_to_genePred: ""
+    GenePred_to_bgpInput: ""
+    bgpInput_to_bigGenePred: "-type=bed12+8 -tab"
   process_genome_annotation:
     gff3_to_GenePred: "-rnaNameAttr=gene" #gff3ToGenePred
     GenePred_to_bgpInput: "" #genePredToBigGenePred

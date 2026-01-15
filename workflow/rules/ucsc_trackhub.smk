@@ -29,59 +29,96 @@ rule tsr_bed_to_bigBed:
         """
 
 
-rule gff3_to_GenePred:
+rule ref_gff_to_bigGenePred:
     input:
         gff="results/get_genome/genome.gff",
-    output:
-        genePred="results/get_genome/genome.GenePred",
-    params:
-        extra=config["ucsc_trackhub"]["process_genome_annotation"]["gff3_to_GenePred"],
-    conda:
-        "../envs/ucsc_tools.yaml"
-    log:
-        "results/get_genome/gff3_to_GenePred.log",
-    shell:
-        """
-        gff3ToGenePred {params.extra} {input.gff} {output.genePred}
-        """
-
-
-rule GenePred_to_bgpInput:
-    input:
-        GenePred="results/get_genome/genome.GenePred",
-    output:
-        bgpInput="results/get_genome/genome.bgpInput",
-    params:
-        extra=config["ucsc_trackhub"]["process_genome_annotation"][
-            "GenePred_to_bgpInput"
-        ],
-    conda:
-        "../envs/ucsc_tools.yaml"
-    log:
-        "results/get_genome/GenePred_to_bgpInput.log",
-    shell:
-        """
-         genePredToBigGenePred {params.extra} {input.GenePred} stdout | sort -k1,1 -k2,2n > {output.bgpInput}
-        """
-
-
-rule bgpInput_to_bigGenePred:
-    input:
-        bgpInput="results/get_genome/genome.bgpInput",
         chrom_sizes="results/get_genome/genome.chrom.sizes",
     output:
         bigGenePred="results/get_genome/genome.bb",
     params:
-        extra=config["ucsc_trackhub"]["process_genome_annotation"][
+        intermediate_files=lambda wildcards, input: multiext(
+            subpath(input.gff, strip_suffix=".gff"), ".genePred", ".bgpInput"
+        ),
+        gff3ToGenePred_extra=config["ucsc_trackhub"]["process_genome_annotation"][
+            "gff3_to_GenePred"
+        ],
+        genePredToBigGenePred_extra=config["ucsc_trackhub"][
+            "process_genome_annotation"
+        ]["GenePred_to_bgpInput"],
+        bedToBigBed_extra=config["ucsc_trackhub"]["process_genome_annotation"][
             "bgpInput_to_bigGenePred"
         ],
     conda:
         "../envs/ucsc_tools.yaml"
     log:
-        "results/get_genome/bgpInput_to_bigGenePred.log",
+        "results/get_genome/bigbed.log",
     shell:
         """
-        bedToBigBed {params.extra} {input.bgpInput} {input.chrom_sizes} {output.bigGenePred}
+        gff3ToGenePred {params.gff3ToGenePred_extra} {input.gff} {params.intermediate_files[0]}
+        genePredToBigGenePred {params.genePredToBigGenePred_extra} {params.intermediate_files[0]} stdout | sort -k1,1 -k2,2n > {params.intermediate_files[1]}
+        bedToBigBed {params.bedToBigBed_extra} {params.intermediate_files[1]} {input.chrom_sizes} {output.bigGenePred}
+        """
+
+
+rule stringtie_gtf_to_bigGenePred:
+    input:
+        gtf="results/stringtie/stringtie_merged.gtf",
+        chrom_sizes="results/get_genome/genome.chrom.sizes",
+    output:
+        bigGenePred="results/stringtie/stringtie_merged.bb",
+    params:
+        intermediate_files=lambda wildcards, input: multiext(
+            subpath(input.gtf, strip_suffix=".gtf"), ".genePred", ".bgpInput"
+        ),
+        gtfToGenePred_extra=config["ucsc_trackhub"]["process_stringtie"][
+            "gtf_to_genePred"
+        ],
+        genePredToBigGenePred_extra=config["ucsc_trackhub"]["process_stringtie"][
+            "GenePred_to_bgpInput"
+        ],
+        bedToBigBed_extra=config["ucsc_trackhub"]["process_stringtie"][
+            "bgpInput_to_bigGenePred"
+        ],
+    conda:
+        "../envs/ucsc_tools.yaml"
+    log:
+        "results/stringtie/bigbed.log",
+    shell:
+        """
+        gtfToGenePred {params.gtfToGenePred_extra} {input.gtf} {params.intermediate_files[0]}
+        genePredToBigGenePred {params.genePredToBigGenePred_extra} {params.intermediate_files[0]} stdout | sort -k1,1 -k2,2n > {params.intermediate_files[1]}
+        bedToBigBed {params.bedToBigBed_extra} {params.intermediate_files[1]} {input.chrom_sizes} {output.bigGenePred}
+        """
+
+
+rule gffcompare_gtf_to_bigGenePred:
+    input:
+        gtf="results/gffcompare/gffcmp.annotated.gtf",
+        chrom_sizes="results/get_genome/genome.chrom.sizes",
+    output:
+        bigGenePred="results/gffcompare/gffcmp.annotated.bb",
+    params:
+        intermediate_files=lambda wildcards, input: multiext(
+            subpath(input.gtf, strip_suffix=".gtf"), ".genePred", ".bgpInput"
+        ),
+        gtfToGenePred_extra=config["ucsc_trackhub"]["process_gffcompare"][
+            "gtf_to_genePred"
+        ],
+        genePredToBigGenePred_extra=config["ucsc_trackhub"]["process_gffcompare"][
+            "GenePred_to_bgpInput"
+        ],
+        bedToBigBed_extra=config["ucsc_trackhub"]["process_gffcompare"][
+            "bgpInput_to_bigGenePred"
+        ],
+    conda:
+        "../envs/ucsc_tools.yaml"
+    log:
+        "results/gffcompare/bigbed.log",
+    shell:
+        """
+        gtfToGenePred {params.gtfToGenePred_extra} {input.gtf} {params.intermediate_files[0]}
+        genePredToBigGenePred {params.genePredToBigGenePred_extra} {params.intermediate_files[0]} stdout | sort -k1,1 -k2,2n > {params.intermediate_files[1]}
+        bedToBigBed {params.bedToBigBed_extra} {params.intermediate_files[1]} {input.chrom_sizes} {output.bigGenePred}
         """
 
 
@@ -103,6 +140,8 @@ rule ucsc_trackhub:
         genome_2bit="results/get_genome/genome.2bit",
         genome_genePred="results/get_genome/genome.bb",
         tsrs="results/tsrs/TSRs.bb",
+        stringtie="results/stringtie/stringtie_merged.bb",
+        gffcompare="results/gffcompare/gffcmp.annotated.bb",
         fiveprime_plus_bw=lambda wildcards: expand(
             "results/deeptools/5prime_coverage/{sample}_forward.bw",
             sample=fastq_process_align.samples.index,

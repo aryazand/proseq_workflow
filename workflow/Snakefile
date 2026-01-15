@@ -33,6 +33,7 @@ trackhub_dir = "genome_browser/ucsc_trackhub/"
 include: "rules/coverage.smk"
 include: "rules/call_tsrs.smk"
 include: "rules/ucsc_trackhub.smk"
+include: "rules/annotations.smk"
 
 
 # optional messages, log and error handling
@@ -57,6 +58,8 @@ rule all:
     input:
         "results/tsrs/TSRs.bed",
         "results/multiqc/multiqc_report.html",
+        "results/stringtie/stringtie_merged.gtf",
+        "results/gffcompare/gffcmp.annotated.gtf",
         expand(
             os.path.join(trackhub_dir, "{org}", "trackDb.txt"),
             org=config["ucsc_trackhub"]["genomes"],
