@@ -78,6 +78,8 @@ ucsc_trackhub:
   email: "aryazand@test.org"
   short_label: "TEST trackhub"
   long_label: "TEST trackhub"
+  group_name: "Testing"
+  group_label: "Testing"
   process_tsrs:
     tsr_bed_to_bigBed: "" #bedToBigBed
   process_genome_annotation:

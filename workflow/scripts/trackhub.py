@@ -41,7 +41,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     genomes_file.add_genome(genome)
 
     #######################
-    # Add data to trackdb.txt
+    # Add genome model to trackdb.txt
     #######################
 
     # Add genome model
@@ -56,7 +56,10 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
 
     trackdb.add_tracks(genome_model)
 
-    # Add TSRs track
+    #######################
+    # Add TSRs to trackdb.txt
+    #######################
+
     tsr_track = trackhub.Track(
         name="TSRs",
         tracktype="bigBed",
@@ -67,6 +70,10 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     )
 
     trackdb.add_tracks(tsr_track)
+
+    #######################
+    # Add BigWig to trackdb.txt
+    #######################
 
     # Loop through bigwig files in snakemake.input.bw and add to trackhub
     for bw in snakemake.input.fiveprime_plus_bw:
@@ -139,4 +146,29 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
 
         trackdb.add_tracks(bw_track)
 
+    #######################
+    # Add groups 
+    #######################
+
+    group_name=snakemake.config["ucsc_trackhub"]["group_name"]
+    group_label=snakemake.config["ucsc_trackhub"]["group_label"]
+
+    grouping = trackhub.groups.GroupDefinition(
+        name=group_name,
+        label=group_label,
+        priority=1,
+        default_is_closed=False)
+
+    groups_file = trackhub.groups.GroupsFile([grouping])
+    genome.add_groups(groups_file)
+
+    # We can now add the "group" parameter to all the children of the trackDb
+    for track in trackdb.children:
+        track.add_params(group=group_name)
+
+
+    #######################
+    # Stage Trackhub 
+    #######################
+    
     trackhub.upload.stage_hub(hub, staging=snakemake.output.dir)
