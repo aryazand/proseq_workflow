@@ -113,6 +113,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name + ("(5' ends)"),
             visibility="full",
             autoScale="on",
+            maxHeightPixels="100:50:8",
             color=snakemake.config["ucsc_trackhub"]["process_bw"]["plus_color"]
         )
 
@@ -130,6 +131,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name + ("(5' ends)"),
             visibility="full",
             autoScale="on",
+            maxHeightPixels="100:50:8",
             negateValues=snakemake.config["ucsc_trackhub"]["process_bw"]["negateValues_for_minus_strand"],
             color=snakemake.config["ucsc_trackhub"]["process_bw"]["minus_color"]
         )
@@ -148,6 +150,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name,
             visibility="full",
             autoScale="on",
+            maxHeightPixels="100:50:8",
             color=snakemake.config["ucsc_trackhub"]["process_bw"]["plus_color"]
         )
 
@@ -165,6 +168,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name,
             visibility="full",
             autoScale="on",
+            maxHeightPixels="100:50:8",
             negateValues=snakemake.config["ucsc_trackhub"]["process_bw"]["negateValues_for_minus_strand"],
             color=snakemake.config["ucsc_trackhub"]["process_bw"]["minus_color"]
         )
