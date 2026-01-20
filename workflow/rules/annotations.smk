@@ -5,6 +5,8 @@ rule stringtie:
         "results/stringtie/{sample}.gtf",
     conda:
         "../envs/stringtie.yml"
+    container:
+        "quay.io/biocontainers/stringtie:3.0.3--h29c0135_0"
     log:
         "results/stringtie/{sample}.log",
     params:
@@ -32,6 +34,8 @@ rule stringtie_merge:
         gtf="results/stringtie/stringtie_merged.gtf",
     conda:
         "../envs/stringtie.yml"
+    container:
+        "quay.io/biocontainers/stringtie:3.0.3--h29c0135_0"
     log:
         "results/stringtie/stringtie_merge.log",
     params:
@@ -53,6 +57,8 @@ rule gff_compare:
         output_prefix=subpath(output.gtf, strip_suffix=".annotated.gtf"),
     conda:
         "../envs/gffcompare.yml"
+    container:
+        "quay.io/biocontainers/gffcompare:0.12.10--h9948957_0"
     log:
         "results/gffcompare/gffcompare.log",
     shell:
