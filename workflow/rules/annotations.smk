@@ -9,6 +9,7 @@ rule stringtie:
         "results/stringtie/{sample}.log",
     params:
         ref_gff=config["annotation"]["stringtie"]["ref_anno"],
+        extra=config["annotation"]["stringtie"]["extra"],
         strandedness=lambda wildcards: (
             "--rf"
             if config["annotation"]["stringtie"]["strandedness"] == "reverse"
@@ -19,7 +20,7 @@ rule stringtie:
             )
         ),
     shell:
-        "stringtie {input.bam} -G {params.ref_gff} {params.strandedness} -o {output}"
+        "stringtie {input.bam} -G {params.ref_gff} {params.strandedness} {params.extra} -o {output}"
 
 
 rule stringtie_merge:
@@ -34,10 +35,10 @@ rule stringtie_merge:
     log:
         "results/stringtie/stringtie_merge.log",
     params:
-        ref_gff=config["annotation"]["stringtie"]["ref_anno"],
+        extra=config["annotation"]["stringtie_merge"]["extra"],
     shell:
         """
-        stringtie --merge -G {params.ref_gff} -o {output.gtf} {input.gtfs}
+        stringtie --merge {params.extra} -o {output.gtf} {input.gtfs}
         """
 
 

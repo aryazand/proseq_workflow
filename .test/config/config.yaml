@@ -65,6 +65,8 @@ annotation:
     ref_anno: "data/genome/KF297339.1.gff"
     strandedness: ""
     extra: "--nasc" #Keeps non poly-A RNA for output
+  stringtie_merge:
+    extra: ""
   gffcompare:
     extra: ""
 
