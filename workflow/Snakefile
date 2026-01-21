@@ -29,7 +29,7 @@ use rule * from fastq_process_align as fastq_process_align_*
 
 trackhub_dir = "genome_browser/ucsc_trackhub/"
 
-
+include: "rules/common.smk"
 include: "rules/coverage.smk"
 include: "rules/call_tsrs.smk"
 include: "rules/ucsc_trackhub.smk"

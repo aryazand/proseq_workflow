@@ -44,6 +44,16 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     # Add genome model to trackdb.txt
     #######################
 
+    # Add group
+    annotation_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_annotations"
+    annotation_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + " Annotations"
+
+    annotation_group = trackhub.groups.GroupDefinition(
+        name=annotation_group_name,
+        label=annotation_group_label,
+        priority=1,
+        default_is_closed=False)
+    
     # Add genome model
     genome_model = trackhub.Track(
         name=assembly_data["trackDb"]["annotation"]["track_name"],
@@ -54,34 +64,28 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         visibility="pack",
     )
 
-    # Add Stringtie Annotation track
-
-    stringtie_track = trackhub.Track(
-        name=assembly_data["trackDb"]["stringtie"]["track_name"],
-        tracktype="bigBed",
-        source=os.path.abspath(snakemake.input.stringtie),
-        shortLabel=assembly_data["trackDb"]["stringtie"]["shortLabel"],
-        longLabel=assembly_data["trackDb"]["stringtie"]["longLabel"],
-        visibility="dense",
-    )
-
-    # Add group
-    annotation_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_annotations"
-    annotation_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + " Annotations"
-
-    annotation_group = trackhub.groups.GroupDefinition(
-        name=annotation_group_name,
-        label=annotation_group_label,
-        priority=1,
-        default_is_closed=False)
-
-    for track in [genome_model, stringtie_track]:
-        track.add_params(group=annotation_group_name)
-
-    # Add to trackdb
+    genome_model.add_params(group=annotation_group_name)
     trackdb.add_tracks(genome_model)
-    trackdb.add_tracks(stringtie_track)
 
+    # Add Stringtie Annotation tracks
+
+    for st in snakemake.input.stringtie:
+
+        st_basename=os.path.basename(st)
+        st_name=os.path.splitext(st_basename)[0]
+
+        stringtie_track = trackhub.Track(
+            name=st_name + "_transcripts",
+            tracktype="bigBed",
+            source=os.path.abspath(st),
+            shortLabel=st + " transcripts",
+            longLabel=st + " transcripts predicted by stringtie",
+            visibility="dense",
+        )
+
+        stringtie_track.add_params(group=annotation_group_name)
+        trackdb.add_tracks(stringtie_track)
+    
     #######################
     # Add TSRs to trackdb.txt
     #######################

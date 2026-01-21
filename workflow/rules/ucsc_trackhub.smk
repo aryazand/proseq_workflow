@@ -17,9 +17,9 @@ rule gff3ToGenePred:
     output:
         genePred="{file}.genePred",
     params:
-        extra=lambda wc: config["ucsc_trackhub"]["gff3ToGenePred"][
-            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
-        ],
+        extra=lambda wc: config["ucsc_trackhub"]["gff3ToGenePred"].get(
+            get_config_key(wc.file), ""
+        ),
     container:
         "docker://quay.io/biocontainers/ucsc-gff3togenepred:482--h0b57e2e_0"
     log:
@@ -36,9 +36,9 @@ rule gtfToGenePred:
     output:
         genePred="{file}.genePred",
     params:
-        extra=lambda wc: config["ucsc_trackhub"]["gtfToGenePred"][
-            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
-        ],
+        extra=lambda wc: config["ucsc_trackhub"]["gtfToGenePred"].get(
+            get_config_key(wc.file), ""
+        ),
     container:
         "docker://quay.io/biocontainers/ucsc-gtftogenepred:482--h0b57e2e_0"
     log:
@@ -55,16 +55,16 @@ rule genePredToBigGenePred:
     output:
         bed="{file}.bed",
     params:
-        extra=lambda wc: config["ucsc_trackhub"]["genePredToBigGenePred"][
-            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
-        ],
+        extra=lambda wc: config["ucsc_trackhub"]["genePredToBigGenePred"].get(
+            get_config_key(wc.file), ""
+        ),
     container:
         "docker://quay.io/biocontainers/ucsc-genepredtobiggenepred:482--h0b57e2e_0"
     log:
         "{file}.genePredToBigGenePred.log",
     shell:
         """
-        genePredToBigGenePred {params.extra} {input.genePred} {output.bed}            
+        genePredToBigGenePred {params.extra} {input.genePred}  stdout | sort -k1,1 -k2,2n > {output.bed}            
         """
 
 
@@ -75,9 +75,9 @@ rule bedToBigBed:
     output:
         bigBed="{file}.bb",
     params:
-        extra = lambda wc: config["ucsc_trackhub"]["bedToBigBed"][
-            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
-        ],
+        extra=lambda wc: config["ucsc_trackhub"]["bedToBigBed"].get(
+            get_config_key(wc.file), ""
+        ),
     container:
         "docker://quay.io/biocontainers/ucsc-bedtobigbed:482--hdc0a859_0"
     log:
@@ -86,6 +86,7 @@ rule bedToBigBed:
         """
         bedToBigBed {params.extra} {input.bed} {input.chrom_sizes} {output.bigBed}          
         """
+
 
 rule faToTwoBit:
     input:
@@ -105,7 +106,10 @@ rule ucsc_trackhub:
         genome_2bit="results/get_genome/genome.2bit",
         genome_genePred="results/get_genome/genome.bb",
         tsrs="results/tsrs/TSRs.bb",
-        stringtie="results/stringtie/stringtie_merged.bb",
+        stringtie=lambda wildcards: expand(
+            "results/stringtie/{sample}.bb",
+            sample=fastq_process_align.samples.index,
+        ),
         fiveprime_plus_bw=lambda wildcards: expand(
             "results/deeptools/5prime_coverage/{sample}_forward.bw",
             sample=fastq_process_align.samples.index,

@@ -85,16 +85,16 @@ qc:
 
 ucsc_trackhub:
   gff3ToGenePred:
-    genome.gff: "-rnaNameAttr=gene"
+    genome: "-rnaNameAttr=gene"
   gtfToGenePred:
-    stringtie_merged: ""
+    stringtie: ""
   genePredToBigGenePred:
-    stringtie_merged: ""
+    stringtie: ""
     genome: ""
   bedToBigBed:
     TSRs: ""
     genome: "-type=bed12+1 -tab"
-    stringtie_merged: "-type=bed12+8 -tab"
+    stringtie: "-type=bed12+8 -tab"
   faToTwoBit:
     genome: ""
   hub_file:
@@ -115,10 +115,6 @@ ucsc_trackhub:
           track_name: "TB40"
           short_label: "HCMV TB40E"
           long_label: "HCMV TB40E, clone Lisa"
-        stringtie:
-          track_name: "annotation_track_stringtie"
-          shortLabel: "annotations from RNA-seq (stringtie)"
-          longLabel: "annotations from RNA-seq (stringtie)"
         bw:
           plus_color: "0,0,100"
           minus_color: "255,0,0"
