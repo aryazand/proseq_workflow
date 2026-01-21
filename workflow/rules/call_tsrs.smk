@@ -4,7 +4,7 @@ rule call_tsrs:
     output:
         "results/tsrs/{sample}_{strand}.bed",
     container:
-        workflow.source_path("../envs/tsrDetectR.sif")
+        "http://pricenas.biochem.uiowa.edu/arya/container_images/tsrDetectR.sif"
     log:
         "results/tsrs/{sample}_{strand}.log",
     script:
