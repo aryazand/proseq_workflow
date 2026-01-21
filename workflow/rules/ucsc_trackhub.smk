@@ -53,7 +53,7 @@ rule genePredToBigGenePred:
     input:
         genePred="{file}.genePred",
     output:
-        bed="{file}.bed",
+        bgInput="{file}.bgInput",
     params:
         extra=lambda wc: config["ucsc_trackhub"]["genePredToBigGenePred"].get(
             get_config_key(wc.file), ""
@@ -64,13 +64,15 @@ rule genePredToBigGenePred:
         "{file}.genePredToBigGenePred.log",
     shell:
         """
-        genePredToBigGenePred {params.extra} {input.genePred}  stdout | sort -k1,1 -k2,2n > {output.bed}            
+        genePredToBigGenePred {params.extra} {input.genePred}  stdout | sort -k1,1 -k2,2n > {output.bgInput}            
         """
 
 
 rule bedToBigBed:
     input:
-        bed="{file}.bed",
+        bed=branch(
+            lambda wc: "TSRs" in wc.file, then="{file}.bed", otherwise="{file}.bgInput"
+        ),
         chrom_sizes="results/get_genome/genome.chrom.sizes",
     output:
         bigBed="{file}.bb",

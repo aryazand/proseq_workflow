@@ -93,7 +93,7 @@ ucsc_trackhub:
     genome: ""
   bedToBigBed:
     TSRs: ""
-    genome: "-type=bed12+1 -tab"
+    genome: "-type=bed12+8 -tab"
     stringtie: "-type=bed12+8 -tab"
   faToTwoBit:
     genome: ""

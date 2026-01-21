@@ -46,7 +46,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
 
     # Add group
     annotation_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_annotations"
-    annotation_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + " Annotations"
+    annotation_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + " Annotations"
 
     annotation_group = trackhub.groups.GroupDefinition(
         name=annotation_group_name,
@@ -80,7 +80,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             source=os.path.abspath(st),
             shortLabel=st + " transcripts",
             longLabel=st + " transcripts predicted by stringtie",
-            visibility="dense",
+            visibility="pack",
         )
 
         stringtie_track.add_params(group=annotation_group_name)
@@ -101,7 +101,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     
     # Add group
     tsrs_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_tsrs"
-    tsrs_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + " TSRs"
+    tsrs_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + " TSRs"
 
     tsrs_group = trackhub.groups.GroupDefinition(
         name=tsrs_group_name,
@@ -119,8 +119,8 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     # Add BigWig to trackdb.txt
     #######################
 
-    bw_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_flavo"
-    bw_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + " with Flavo"
+    bw_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_bw"
+    bw_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + " BigWigs"
 
     bw_group = trackhub.groups.GroupDefinition(
         name=bw_group_name,
@@ -144,9 +144,10 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             maxHeightPixels="100:50:8",
             color=assembly_data["trackDb"]["bw"]["plus_color"]
         )
-
-        bw_track.add_params(group=bw_group)
+        
         trackdb.add_tracks(bw_track)
+        bw_track.add_params(group=bw_group)
+
 
     for bw in snakemake.input.fiveprime_minus_bw:
         bw_basename=os.path.basename(bw)
@@ -165,8 +166,9 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             color=assembly_data["trackDb"]["bw"]["minus_color"]
         )
 
-        bw_track.add_params(group=bw_group)
         trackdb.add_tracks(bw_track)
+        bw_track.add_params(group=bw_group)
+        
 
     for bw in snakemake.input.plus_bw:
         bw_basename=os.path.basename(bw)
@@ -184,8 +186,8 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             color=assembly_data["trackDb"]["bw"]["plus_color"]
         )
         
-        bw_track.add_params(group=bw_group)
         trackdb.add_tracks(bw_track)
+        bw_track.add_params(group=bw_group)
 
     for bw in snakemake.input.minus_bw:
         bw_basename=os.path.basename(bw)
@@ -204,8 +206,8 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             color=assembly_data["trackDb"]["bw"]["minus_color"]
         )
 
-        bw_track.add_params(group=bw_group)
         trackdb.add_tracks(bw_track)
+        bw_track.add_params(group=bw_group)
 
     #######################
     # Define Group File
