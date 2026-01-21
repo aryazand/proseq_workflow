@@ -11,116 +11,81 @@ rule get_chr_sizes:
         """
 
 
-rule tsr_bed_to_bigBed:
+rule gff3ToGenePred:
     input:
-        bed="results/tsrs/TSRs.bed",
-        chrom_sizes="results/get_genome/genome.chrom.sizes",
+        gff="{file}.gff",
     output:
-        bigbed="results/tsrs/TSRs.bb",
+        genePred="{file}.genePred",
     params:
-        extra=config["ucsc_trackhub"]["process_tsrs"]["tsr_bed_to_bigBed"],
-    conda:
-        "../envs/ucsc_tools.yaml"
+        extra=lambda wc: config["ucsc_trackhub"]["gff3ToGenePred"][
+            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
+        ],
+    container:
+        "docker://quay.io/biocontainers/ucsc-gff3togenepred:482--h0b57e2e_0"
     log:
-        "results/tsrs/bigbed.log",
+        "{file}.gff3ToGenePred.log",
     shell:
         """
-        bedToBigBed {params.extra} {input.bed} {input.chrom_sizes} {output.bigbed}
+        gff3ToGenePred {params.extra} {input.gff} {output.genePred}            
         """
 
 
-rule ref_gff_to_bigGenePred:
+rule gtfToGenePred:
     input:
-        gff="results/get_genome/genome.gff",
-        chrom_sizes="results/get_genome/genome.chrom.sizes",
+        gtf="{file}.gtf",
     output:
-        bigGenePred="results/get_genome/genome.bb",
+        genePred="{file}.genePred",
     params:
-        intermediate_files=lambda wildcards, input: multiext(
-            subpath(input.gff, strip_suffix=".gff"), ".genePred", ".bgpInput"
-        ),
-        gff3ToGenePred_extra=config["ucsc_trackhub"]["process_genome_annotation"][
-            "gff3_to_GenePred"
+        extra=lambda wc: config["ucsc_trackhub"]["gtfToGenePred"][
+            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
         ],
-        genePredToBigGenePred_extra=config["ucsc_trackhub"][
-            "process_genome_annotation"
-        ]["GenePred_to_bgpInput"],
-        bedToBigBed_extra=config["ucsc_trackhub"]["process_genome_annotation"][
-            "bgpInput_to_bigGenePred"
-        ],
-    conda:
-        "../envs/ucsc_tools.yaml"
+    container:
+        "docker://quay.io/biocontainers/ucsc-gtftogenepred:482--h0b57e2e_0"
     log:
-        "results/get_genome/bigbed.log",
+        "{file}.gtfToGenePred.log",
     shell:
         """
-        gff3ToGenePred {params.gff3ToGenePred_extra} {input.gff} {params.intermediate_files[0]}
-        genePredToBigGenePred {params.genePredToBigGenePred_extra} {params.intermediate_files[0]} stdout | sort -k1,1 -k2,2n > {params.intermediate_files[1]}
-        bedToBigBed {params.bedToBigBed_extra} {params.intermediate_files[1]} {input.chrom_sizes} {output.bigGenePred}
+        gtfToGenePred {params.extra} {input.gtf} {output.genePred}            
         """
 
 
-rule stringtie_gtf_to_bigGenePred:
+rule genePredToBigGenePred:
     input:
-        gtf="results/stringtie/stringtie_merged.gtf",
-        chrom_sizes="results/get_genome/genome.chrom.sizes",
+        genePred="{file}.genePred",
     output:
-        bigGenePred="results/stringtie/stringtie_merged.bb",
+        bed="{file}.bed",
     params:
-        intermediate_files=lambda wildcards, input: multiext(
-            subpath(input.gtf, strip_suffix=".gtf"), ".genePred", ".bgpInput"
-        ),
-        gtfToGenePred_extra=config["ucsc_trackhub"]["process_stringtie"][
-            "gtf_to_genePred"
+        extra=lambda wc: config["ucsc_trackhub"]["genePredToBigGenePred"][
+            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
         ],
-        genePredToBigGenePred_extra=config["ucsc_trackhub"]["process_stringtie"][
-            "GenePred_to_bgpInput"
-        ],
-        bedToBigBed_extra=config["ucsc_trackhub"]["process_stringtie"][
-            "bgpInput_to_bigGenePred"
-        ],
-    conda:
-        "../envs/ucsc_tools.yaml"
+    container:
+        "docker://quay.io/biocontainers/ucsc-genepredtobiggenepred:482--h0b57e2e_0"
     log:
-        "results/stringtie/bigbed.log",
+        "{file}.genePredToBigGenePred.log",
     shell:
         """
-        gtfToGenePred {params.gtfToGenePred_extra} {input.gtf} {params.intermediate_files[0]}
-        genePredToBigGenePred {params.genePredToBigGenePred_extra} {params.intermediate_files[0]} stdout | sort -k1,1 -k2,2n > {params.intermediate_files[1]}
-        bedToBigBed {params.bedToBigBed_extra} {params.intermediate_files[1]} {input.chrom_sizes} {output.bigGenePred}
+        genePredToBigGenePred {params.extra} {input.genePred} {output.bed}            
         """
 
 
-rule gffcompare_gtf_to_bigGenePred:
+rule bedToBigBed:
     input:
-        gtf="results/gffcompare/gffcmp.annotated.gtf",
+        bed="{file}.bed",
         chrom_sizes="results/get_genome/genome.chrom.sizes",
     output:
-        bigGenePred="results/gffcompare/gffcmp.annotated.bb",
+        bigBed="{file}.bb",
     params:
-        intermediate_files=lambda wildcards, input: multiext(
-            subpath(input.gtf, strip_suffix=".gtf"), ".genePred", ".bgpInput"
-        ),
-        gtfToGenePred_extra=config["ucsc_trackhub"]["process_gffcompare"][
-            "gtf_to_genePred"
+        extra = lambda wc: config["ucsc_trackhub"]["bedToBigBed"][
+            os.path.splitext(os.path.basename(f"{wc.file}"))[0]
         ],
-        genePredToBigGenePred_extra=config["ucsc_trackhub"]["process_gffcompare"][
-            "GenePred_to_bgpInput"
-        ],
-        bedToBigBed_extra=config["ucsc_trackhub"]["process_gffcompare"][
-            "bgpInput_to_bigGenePred"
-        ],
-    conda:
-        "../envs/ucsc_tools.yaml"
+    container:
+        "docker://quay.io/biocontainers/ucsc-bedtobigbed:482--hdc0a859_0"
     log:
-        "results/gffcompare/bigbed.log",
+        "{file}.bedToBigBed.log",
     shell:
         """
-        gtfToGenePred {params.gtfToGenePred_extra} {input.gtf} {params.intermediate_files[0]}
-        genePredToBigGenePred {params.genePredToBigGenePred_extra} {params.intermediate_files[0]} stdout | sort -k1,1 -k2,2n > {params.intermediate_files[1]}
-        bedToBigBed {params.bedToBigBed_extra} {params.intermediate_files[1]} {input.chrom_sizes} {output.bigGenePred}
+        bedToBigBed {params.extra} {input.bed} {input.chrom_sizes} {output.bigBed}          
         """
-
 
 rule faToTwoBit:
     input:
@@ -128,7 +93,7 @@ rule faToTwoBit:
     output:
         "results/get_genome/genome.2bit",
     params:
-        extra=config["ucsc_trackhub"]["process_fasta"]["faToTwoBit"],
+        extra=config["ucsc_trackhub"]["faToTwoBit"]["genome"],
     log:
         "results/get_genome/fa_to_2bit.log",
     wrapper:
@@ -141,7 +106,6 @@ rule ucsc_trackhub:
         genome_genePred="results/get_genome/genome.bb",
         tsrs="results/tsrs/TSRs.bb",
         stringtie="results/stringtie/stringtie_merged.bb",
-        gffcompare="results/gffcompare/gffcmp.annotated.bb",
         fiveprime_plus_bw=lambda wildcards: expand(
             "results/deeptools/5prime_coverage/{sample}_forward.bw",
             sample=fastq_process_align.samples.index,
@@ -165,13 +129,14 @@ rule ucsc_trackhub:
             org=config["ucsc_trackhub"]["genomes"],
         ),
         hubtxt=os.path.join(
-            trackhub_dir, config["ucsc_trackhub"]["hub_name"] + ".hub.txt"
+            trackhub_dir, config["ucsc_trackhub"]["hub_file"]["hub_name"] + ".hub.txt"
         ),
         genomestxt=os.path.join(
-            trackhub_dir, config["ucsc_trackhub"]["hub_name"] + ".genomes.txt"
+            trackhub_dir,
+            config["ucsc_trackhub"]["hub_file"]["hub_name"] + ".genomes.txt",
         ),
-    conda:
-        "../envs/trackhub.yaml"
+    container:
+        "docker://quay.io/biocontainers/trackhub:1.0--pyh7cba7a3_0"
     log:
         os.path.join(trackhub_dir, "trackhub.log"),
     script:

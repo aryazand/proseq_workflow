@@ -4,6 +4,7 @@ logs/**
 .snakemake
 .snakemake/**
 .test/results/*
+.test/.cache
 .test/genome_browser
 workflow/notebooks/.ipynb_checkpoints/**
 **/.Rhistory
@@ -12,3 +13,5 @@ workflow/notebooks/.ipynb_checkpoints/**
 **/.RData
 **/Rplots.pdf
 **/.DS_Store
+*.sif
+*.simg

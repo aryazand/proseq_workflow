@@ -84,46 +84,46 @@ qc:
     extra: "--quiet"
 
 ucsc_trackhub:
-  hub_name: "test"
-  email: "aryazand@test.org"
-  short_label: "TEST trackhub"
-  long_label: "TEST trackhub"
-  group_name: "Testing"
-  group_label: "Testing"
-  process_tsrs:
-    tsr_bed_to_bigBed: "" #bedToBigBed
-  process_stringtie:
-    track_name: "annotation_track_stringtie"
-    shortLabel: "annotations from RNA-seq (stringtie)"
-    longLabel: "annotations from RNA-seq (stringtie)"
-    gtf_to_genePred: ""
-    GenePred_to_bgpInput: ""
-    bgpInput_to_bigGenePred: "-type=bed12+8 -tab"
-  process_gffcompare:
-    track_name: "annotation_track_gffcompare"
-    shortLabel: "annotations from RNA-seq (gffcompare)"
-    longLabel: "annotations from RNA-seq (gffcompare)"
-    gtf_to_genePred: ""
-    GenePred_to_bgpInput: ""
-    bgpInput_to_bigGenePred: "-type=bed12+8 -tab"
-  process_genome_annotation:
-    gff3_to_GenePred: "-rnaNameAttr=gene" #gff3ToGenePred
-    GenePred_to_bgpInput: "" #genePredToBigGenePred
-    bgpInput_to_bigGenePred: "-type=bed12+8 -tab" #bedToBigBed
-  process_fasta:
-    faToTwoBit: ""
-  process_bw:
-    plus_color: "0,0,100"
-    minus_color: "255,0,0"
-    negateValues_for_minus_strand: "on" # on or off
+  gff3ToGenePred:
+    genome.gff: "-rnaNameAttr=gene"
+  gtfToGenePred:
+    stringtie_merged: ""
+  genePredToBigGenePred:
+    stringtie_merged: ""
+    genome: ""
+  bedToBigBed:
+    TSRs: ""
+    genome: "-type=bed12+1 -tab"
+    stringtie_merged: "-type=bed12+8 -tab"
+  faToTwoBit:
+    genome: ""
+  hub_file:
+    hub_name: "test"
+    email: "aryazand@test.org"
+    short_label: "TEST trackhub"
+    long_label: "TEST trackhub"
   genomes:
     KF297339.1:
-      defaultPos: "KF297339.1:1-20000"
       organism: "Human Cytomegalovirus"
       scientificName: "Human Herpesvirus 5 strain TB40E"
+      defaultPos: "KF297339.1:1-20000"
       description: "HCMV TB40E, clone Lisa"
-      html_string: "HCMV TB40E, clone Lisa (html string)"
-      annotation:
-        track_name: "TB40"
-        short_label: "HCMV TB40E"
-        long_label: "HCMV TB40E, clone Lisa"
+      htmlDocumentation: "HCMV TB40E, clone Lisa (html string)"
+      orderKey: 4800
+      trackDb:
+        annotation:
+          track_name: "TB40"
+          short_label: "HCMV TB40E"
+          long_label: "HCMV TB40E, clone Lisa"
+        stringtie:
+          track_name: "annotation_track_stringtie"
+          shortLabel: "annotations from RNA-seq (stringtie)"
+          longLabel: "annotations from RNA-seq (stringtie)"
+        bw:
+          plus_color: "0,0,100"
+          minus_color: "255,0,0"
+          negateValues_for_minus_strand: "on" # on or off
+        TSRs:
+          track_name: "tsrs"
+          shortLabel: "TSRs"
+          longLabel: "Detected Transcription Start Regions"

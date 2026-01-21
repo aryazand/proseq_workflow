@@ -3,8 +3,8 @@ rule call_tsrs:
         "results/deeptools/5prime_coverage/{sample}_{strand}.bw",
     output:
         "results/tsrs/{sample}_{strand}.bed",
-    conda:
-        "../envs/tsr_detectr.yml"
+    container:
+        workflow.source_path("../envs/tsrDetectR.sif")
     log:
         "results/tsrs/{sample}_{strand}.log",
     script:

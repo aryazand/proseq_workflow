@@ -1,0 +1,9 @@
+Bootstrap: docker
+From: quay.io/biocontainers/bioconductor-rtracklayer:1.66.0--r44h15a9599_1
+
+%post
+    # Install devtools or remotes to be able to install from GitHub
+    R --no-echo -e 'install.packages("remotes", repos="https://cloud.r-project.org/")'
+
+    # Install the R package from GitHub, replace "user/repo" with the actual user and repository name
+    R --no-echo -e 'remotes::install_github("aryazand/tsrDetectR")'

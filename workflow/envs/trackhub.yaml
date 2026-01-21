@@ -1,8 +1,0 @@
-name: trackhub
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-  
-dependencies:
-  - trackhub=1.0
