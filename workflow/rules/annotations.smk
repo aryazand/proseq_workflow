@@ -8,7 +8,6 @@ rule stringtie:
     log:
         "results/stringtie/{sample}.log",
     params:
-        ref_gff=config["annotation"]["stringtie"]["ref_anno"],
         extra=config["annotation"]["stringtie"]["extra"],
         strandedness=lambda wildcards: (
             "--rf"
@@ -20,7 +19,7 @@ rule stringtie:
             )
         ),
     shell:
-        "stringtie {input.bam} -G {params.ref_gff} {params.strandedness} {params.extra} -o {output}"
+        "stringtie {input.bam} {params.strandedness} {params.extra} -o {output}"
 
 
 rule stringtie_merge:
