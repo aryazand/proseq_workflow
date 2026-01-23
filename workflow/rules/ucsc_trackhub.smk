@@ -107,7 +107,7 @@ rule ucsc_trackhub:
     input:
         genome_2bit="results/get_genome/genome.2bit",
         genome_genePred="results/get_genome/genome.bb",
-        tsrs=["results/tsrs/TSRs.bed", "results/tsrs/TSRs_merged.bed"],
+        tsrs=["results/tsrs/TSRs.bb", "results/tsrs/TSRs_merged.bb"],
         stringtie=lambda wildcards: expand(
             "results/stringtie/{sample}.bb",
             sample=fastq_process_align.samples.index,
