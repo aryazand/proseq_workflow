@@ -44,7 +44,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     # Add genome model to trackdb.txt
     #######################
 
-    # Add group
+    # Creat Annotation group
     annotation_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_annotations"
     annotation_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + " Annotations"
 
@@ -78,8 +78,8 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             name=st_name + "_transcripts",
             tracktype="bigBed",
             source=os.path.abspath(st),
-            shortLabel=st + " transcripts",
-            longLabel=st + " transcripts predicted by stringtie",
+            shortLabel=st_name + " transcripts",
+            longLabel=st_name + " transcripts predicted by stringtie",
             visibility="pack",
         )
 
@@ -90,16 +90,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
     # Add TSRs to trackdb.txt
     #######################
 
-    tsr_track = trackhub.Track(
-        name=assembly_data["trackDb"]["TSRs"]["track_name"],
-        tracktype="bigBed",
-        source=os.path.abspath(snakemake.input.tsrs),
-        shortLabel=assembly_data["trackDb"]["TSRs"]["shortLabel"],
-        longLabel=assembly_data["trackDb"]["TSRs"]["longLabel"],
-        visibility="dense",
-    )
-    
-    # Add group
+    # Create TSR group
     tsrs_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_tsrs"
     tsrs_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + " TSRs"
 
@@ -108,12 +99,24 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         label=tsrs_group_label,
         priority=2,
         default_is_closed=False)
+    
+    for tsr in snakemake.input.tsrs:
 
-    for track in [tsr_track]:
-        track.add_params(group=tsrs_group_name)
+        tsr_basename=os.path.basename(tsr)
+        tsr_name=os.path.splitext(tsr_basename)[0]
 
-    # Add to trackdb
-    trackdb.add_tracks(tsr_track)
+        tsr_track = trackhub.Track(
+            name=tsr_name + "_tsrs",
+            tracktype="bigBed",
+            source=os.path.abspath(tsr),
+            shortLabel="TSRs in " + tsr_name,
+            longLabel="TSRs detected in " + tsr_name,
+            visibility="dense",
+            spectrum="on"
+        )
+
+        tsr_track.add_params(group=tsrs_group_name)
+        trackdb.add_tracks(tsr_track)
 
     #######################
     # Add BigWig to trackdb.txt

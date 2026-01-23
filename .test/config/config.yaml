@@ -76,6 +76,8 @@ tsrs:
     window: 11
     background: 101
     threshold: 0.99
+  bedtools_merge:
+    extra: "-s -d 10 -c 4,5,6 -o distinct,max,distinct"
 
 qc:
   multiqc:
