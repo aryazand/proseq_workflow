@@ -111,7 +111,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             source=os.path.abspath(tsr),
             shortLabel="TSRs in " + tsr_name,
             longLabel="TSRs detected in " + tsr_name,
-            visibility="dense",
+            visibility="pack",
             spectrum="on"
         )
 
@@ -149,7 +149,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
         
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group)
+        bw_track.add_params(group=bw_group_name)
 
 
     for bw in snakemake.input.fiveprime_minus_bw:
@@ -170,7 +170,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
 
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group)
+        bw_track.add_params(group=bw_group_name)
         
 
     for bw in snakemake.input.plus_bw:
@@ -190,7 +190,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
         
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group)
+        bw_track.add_params(group=bw_group_name)
 
     for bw in snakemake.input.minus_bw:
         bw_basename=os.path.basename(bw)
@@ -210,7 +210,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
 
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group)
+        bw_track.add_params(group=bw_group_name)
 
     #######################
     # Define Group File
