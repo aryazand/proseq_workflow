@@ -36,10 +36,11 @@ rule consolidate_all_tsrs:
         "results/tsrs/TSRs.log",
     shell:
         """
-        TEMP_FILE="results/tsrs/tmp.bed"
+        TEMP_FILE="results/tsrs/temp.bed"
         cat {input} | sort -k1,1 -k2,2n | awk -F'\\t' 'BEGIN{{OFS="\\t"}} {{$5=log($5); print}}' > $TEMP_FILE
         MAX_VAL=$(awk 'BEGIN {{max=0}} {{if ($5>max) max=$5}} END {{print max}}' $TEMP_FILE)
         awk -F'\\t' -v max_val=$MAX_VAL 'BEGIN{{OFS="\\t"}} {{$5=1000*$5/max_val; print}}' $TEMP_FILE > {output}
+        rm $TEMP_FILE
         """
 
 
