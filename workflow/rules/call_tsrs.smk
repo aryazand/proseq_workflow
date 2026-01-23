@@ -39,7 +39,8 @@ rule consolidate_all_tsrs:
         TEMP_FILE="results/tsrs/temp.bed"
         cat {input} | sort -k1,1 -k2,2n | awk -F'\\t' 'BEGIN{{OFS="\\t"}} {{$5=log($5+1); print}}' > $TEMP_FILE
         MAX_VAL=$(awk 'BEGIN {{max=0}} {{if ($5>max) max=$5}} END {{print max}}' $TEMP_FILE)
-        awk -F'\\t' -v max_val=$MAX_VAL 'BEGIN{{OFS="\\t"}} {{$5=1000*$5/max_val; print}}' $TEMP_FILE > {output}
+        MIN_VAL=$(awk 'BEGIN {{min=0}} {{if ($5<min) min=$5}} END {{print min}}' $TEMP_FILE)
+        awk -F'\\t' -v max_val=$MAX_VAL -v min_val=$MIN_VAL 'BEGIN{{OFS="\\t"}} {{$5=int(0.5 + 1000*($5-min_val)/(max_val-min_val)); print}}' $TEMP_FILE > {output}
         rm $TEMP_FILE
         """
 
