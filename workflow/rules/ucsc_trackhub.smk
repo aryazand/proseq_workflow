@@ -92,7 +92,7 @@ rule bedToBigBed:
 
 rule faToTwoBit:
     input:
-        "results/get_genome/genome.fasta",
+        fastq_process_align.get_genome_for_mapping,
     output:
         "results/get_genome/genome.2bit",
     params:
