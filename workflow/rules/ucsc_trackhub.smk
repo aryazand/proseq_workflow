@@ -1,6 +1,6 @@
 rule get_chr_sizes:
     input:
-        "results/get_genome/genome.fasta.fai",
+        fastq_process_align.get_fasta_index,
     output:
         "results/get_genome/genome.chrom.sizes",
     log:

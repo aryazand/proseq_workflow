@@ -12,6 +12,12 @@ get_genome:
       "Genbank": "CDS",
       "Protein Homology": "CDS",
     ]
+  structure: 
+    circular: 
+      [
+        'KF297339.1 Human herpesvirus 5 strain TB40/E clone Lisa, complete genome': 500
+      ]
+
 
 processing:
   tool: "trim_galore"
