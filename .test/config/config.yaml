@@ -22,9 +22,9 @@ get_genome:
 processing:
   tool: "trim_galore"
   fastp:
-    extra: ""
+    extra: "-a NNNNNNNNTGGAATTCTCGG -a2 NNNNNNNNGATCGTCGGACT"
   trim_galore:
-    extra: "--gzip --paired"
+    extra: "--gzip --paired -a NNNNNNNNTGGAATTCTCGG -a2 NNNNNNNNGATCGTCGGACT"
   umi_tools_extract:
     enabled: true # Set to true to enable UMI extraction
     extra: "--bc-pattern=NNNNNNNN --bc-pattern2=NNNNNNNN"
@@ -64,6 +64,7 @@ mapping_stats:
     extra: ""
   deeptools_coverage:
     genome_size: 230000
+    chr_match_for_normalization: "KF297339.1"
     extra: ""
 
 annotation:
