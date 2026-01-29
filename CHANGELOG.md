@@ -1,5 +1,69 @@
 # Changelog
 
+## 1.0.0 (2026-01-29)
+
+
+### Features
+
+* add 3' coverage files ([9985fe2](https://github.com/aryazand/proseq_workflow/commit/9985fe2256f90c3c6be576dc863e7b8ee1b4dd3f))
+* add flags and customizations to trackhub development from config file ([efd909c](https://github.com/aryazand/proseq_workflow/commit/efd909c990ee32303b8eda54affbc6d5d55421f7))
+* add genomic data to trackhub ([f4544c5](https://github.com/aryazand/proseq_workflow/commit/f4544c564946160b51d9d1aad30419eeb4b6a1e1))
+* add maxheight to bigwig tracks ([80130c0](https://github.com/aryazand/proseq_workflow/commit/80130c01ffa2667e393f86faf94ca4596fbbfea8))
+* add support for genome annotation with nascent RNA ([9747036](https://github.com/aryazand/proseq_workflow/commit/974703670ab5e130661c762177dd9107ddadee7a))
+* add support for genome annotation with nascent RNA ([b2a6836](https://github.com/aryazand/proseq_workflow/commit/b2a683679c1f09b96369238c2d4f7b45c9b60f42))
+* add support for groupings in ucsc_trackhub ([c358b1c](https://github.com/aryazand/proseq_workflow/commit/c358b1cae3a52162a48827f3cd38efdb258ab9d0))
+* add support for ucsc genome browser trackhub creation ([f4544c5](https://github.com/aryazand/proseq_workflow/commit/f4544c564946160b51d9d1aad30419eeb4b6a1e1))
+* added option to add overhangs for circular chromosomes ([f07fb7b](https://github.com/aryazand/proseq_workflow/commit/f07fb7b36a45e0fe84e6d7b99a70f9e9b6672a0e))
+* consolidate tsrs ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* each stringtie annotation will be added to trackhub ([b7fb1ab](https://github.com/aryazand/proseq_workflow/commit/b7fb1ab2aec5065fcba79382b012a0d9752937e1))
+* expanded the way TSRs are visualized in trackhub ([98c78be](https://github.com/aryazand/proseq_workflow/commit/98c78be12380da1fc864cf1f8e8b286b2fd44b08))
+* separate bigwig tracks at full coverage, 5', and 3' ([beb9390](https://github.com/aryazand/proseq_workflow/commit/beb939004824c25d51f1473d61264295bb1c4e9d))
+
+
+### Bug Fixes
+
+* add multiqc report to rule all ([b486325](https://github.com/aryazand/proseq_workflow/commit/b486325c30d4c2b2f3e5bb58a3faa044cba1c814))
+* add param.extra the stringtie rule ([9747036](https://github.com/aryazand/proseq_workflow/commit/974703670ab5e130661c762177dd9107ddadee7a))
+* add wildcard constraints to coverage  rules ([00c3a13](https://github.com/aryazand/proseq_workflow/commit/00c3a139b65e45545cce6573874d2b1f17ae3327))
+* added dependencies to allow tsrDetectR to install ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* added space before " --Offset" so that bamCoverage runs properly ([8f5659f](https://github.com/aryazand/proseq_workflow/commit/8f5659f72d06f58b92456596ec5e185cb3019b87))
+* allow export of GITHUB_PAT to install tsrDetectR ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* allow export of GITHUB_PAT to install tsrDetectR ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* allow for flexible channel priorities (motivated by error with github actions) ([45770d4](https://github.com/aryazand/proseq_workflow/commit/45770d4252e2a677a933abee5be416b44ac384bf))
+* allow proper install of tsrDetectR ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* allow tsrDetectR installation ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* bigwig are autoscaled ([fbf8335](https://github.com/aryazand/proseq_workflow/commit/fbf8335e3b243176416a979acfe55da809aa5f6e))
+* call_tsrs as script rather than a shell ([b2da0ac](https://github.com/aryazand/proseq_workflow/commit/b2da0acac10fc3cefca6fa6bd8c48145c729e7fc))
+* color of negative strand bigwig in ucsc track hub ([1eb9976](https://github.com/aryazand/proseq_workflow/commit/1eb9976d1ac3b84408b972dc6ee65b3ea14cc320))
+* correct typo in call_tsrs.smk ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* force creation of coverage files regardless of which samples are used for consolidate_TSRs ([870297e](https://github.com/aryazand/proseq_workflow/commit/870297e54791bee7abde3b7da90fcc466dc3b27d))
+* formatiting ([1d4c464](https://github.com/aryazand/proseq_workflow/commit/1d4c464f1568bdcb6f8cc10af55d41c89aa6def7))
+* formatting ([f4544c5](https://github.com/aryazand/proseq_workflow/commit/f4544c564946160b51d9d1aad30419eeb4b6a1e1))
+* formatting ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* gff_compare only takes stringtie_merge result ([9747036](https://github.com/aryazand/proseq_workflow/commit/974703670ab5e130661c762177dd9107ddadee7a))
+* gff_compare only takes stringtie_merge result ([3da4656](https://github.com/aryazand/proseq_workflow/commit/3da46569cc6d2a8eb0f504d3097b5ba1aebef6db))
+* github actions to not install R globally ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* give different names 5' prime and full coverage tracks on UCSC ([8fe9423](https://github.com/aryazand/proseq_workflow/commit/8fe9423d13295e9e4c98c17f40a953ecd32caf42))
+* group names in ucsc_trackhub ([f0a0c4e](https://github.com/aryazand/proseq_workflow/commit/f0a0c4e2453c78dddcc98d08508528e20fc3ddec))
+* group value wasn't properly being added to bigwig tracks in trackDb ([7ea43fc](https://github.com/aryazand/proseq_workflow/commit/7ea43fc110bc5a94cae0f6d32a910adb815245f6))
+* handle chr with no coverage. feat: filter chr by name pattern ([64b75f3](https://github.com/aryazand/proseq_workflow/commit/64b75f3d7d1d58404d6ca310dd9418d684951e07))
+* include annotations as biggenepred ([00eee0e](https://github.com/aryazand/proseq_workflow/commit/00eee0e5f364537676cbd439a7911be36a40a2ec))
+* includes nnotations are included ([b19c8be](https://github.com/aryazand/proseq_workflow/commit/b19c8bed640f9cfefaf66eb063240ff1d0526079))
+* install tsrDetectR error during github actions ([64108c8](https://github.com/aryazand/proseq_workflow/commit/64108c84e0bacec997e6d08eb36548eb0dedd0ef))
+* install tsrDetectR properly ([ee5c349](https://github.com/aryazand/proseq_workflow/commit/ee5c349efafca141ef436349a58b724e3e968783))
+* log and params in call_tsrs ([a92e50b](https://github.com/aryazand/proseq_workflow/commit/a92e50b04d2bc107cd1e20ee92e21e0fbbb2c8e1))
+* make sure zero is alwasy present on ucsc bigwig tracks ([4f300f5](https://github.com/aryazand/proseq_workflow/commit/4f300f5bf8c7f68e1a6f096fa2281cfa7d5d576a))
+* min-max scale TSR scores and ensure that values are positive integers between 0 and 1000 ([a54615c](https://github.com/aryazand/proseq_workflow/commit/a54615c92f15ec00a775f0df456f3d1ddc31e259))
+* negative minus strand bw ([f4544c5](https://github.com/aryazand/proseq_workflow/commit/f4544c564946160b51d9d1aad30419eeb4b6a1e1))
+* path to tsrDetectR image ([43dfaae](https://github.com/aryazand/proseq_workflow/commit/43dfaae62f52e3add677a401c501e62098be3de5))
+* prevent log of 0 ([f709d0e](https://github.com/aryazand/proseq_workflow/commit/f709d0e67f47022ffcb7fc7ba4ed48a8a7e8e5db))
+* properly make 2bit file if overhang is specified for circular chromsomes ([7fd9db1](https://github.com/aryazand/proseq_workflow/commit/7fd9db1cb5616dcd4d77c46f597e3da7b827de3e))
+* remove requirement for stringtie rule to have a reference annotation ([c690a09](https://github.com/aryazand/proseq_workflow/commit/c690a09d12137ff9bf2938e59c67c6a1e7c06e4c))
+* remove seting sys env variable ([b2da0ac](https://github.com/aryazand/proseq_workflow/commit/b2da0acac10fc3cefca6fa6bd8c48145c729e7fc))
+* renamed "strand" to "param_strand" to avoid name conflict and fixed if statement ([97fb45e](https://github.com/aryazand/proseq_workflow/commit/97fb45e1faef607f6a1a0576c64f33033ec5f5f2))
+* TSRs weren't being properly added to ucsc_trackhub rule ([05dca9d](https://github.com/aryazand/proseq_workflow/commit/05dca9d1f0bb72beebf1b95264f415c98b63a8a6))
+* use cram instead of bam ([fad1f7e](https://github.com/aryazand/proseq_workflow/commit/fad1f7e197dc99a376a06c10096eb396147bb3bd))
+
 ## [1.1.0](https://github.com/snakemake-workflows/snakemake-workflow-template/compare/v1.0.0...v1.1.0) (2025-07-29)
 
 
