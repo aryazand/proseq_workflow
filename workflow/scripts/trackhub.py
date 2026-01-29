@@ -131,6 +131,25 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         priority=3,
         default_is_closed=False)
     
+    fiveprime_bw_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_fiveprime_bw"
+    fiveprime_bw_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + "5' ends BigWigs"
+
+    fiveprime_bw_group = trackhub.groups.GroupDefinition(
+        name=fiveprime_bw_group_name,
+        label=fiveprime_bw_group_label,
+        priority=4,
+        default_is_closed=False)
+    
+    threeprime_bw_group_name = snakemake.config["ucsc_trackhub"]["hub_file"]["hub_name"] + "_threprime__bw"
+    threeprime_bw_group_label = snakemake.config["ucsc_trackhub"]["hub_file"]["short_label"] + "3' ends BigWigs"
+
+    threeprime_bw_group = trackhub.groups.GroupDefinition(
+        name=threeprime_bw_group_name,
+        label=threeprime_bw_group_label,
+        priority=5,
+        default_is_closed=False)
+    
+    
     # Loop through bigwig files in snakemake.input.bw and add to trackhub
     for bw in snakemake.input.fiveprime_plus_bw:
         bw_basename=os.path.basename(bw)
@@ -149,7 +168,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
         
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group_name)
+        bw_track.add_params(group=fiveprime_bw_group_name)
 
 
     for bw in snakemake.input.fiveprime_minus_bw:
@@ -170,7 +189,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
 
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group_name)
+        bw_track.add_params(group=fiveprime_bw_group_name)
         
     for bw in snakemake.input.threeprime_plus_bw:
         bw_basename=os.path.basename(bw)
@@ -189,7 +208,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
         
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group_name)
+        bw_track.add_params(group=threeprime_bw_group_name)
 
 
     for bw in snakemake.input.threeprime_minus_bw:
@@ -210,7 +229,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         )
 
         trackdb.add_tracks(bw_track)
-        bw_track.add_params(group=bw_group_name)
+        bw_track.add_params(group=threeprime_bw_group_name)
 
     for bw in snakemake.input.plus_bw:
         bw_basename=os.path.basename(bw)
