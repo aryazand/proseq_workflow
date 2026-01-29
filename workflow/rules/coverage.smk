@@ -4,6 +4,8 @@ rule deeptools_coverage:
         bai=fastq_process_align.get_crai,
     output:
         "results/deeptools/coverage/{sample}_{direction}.bw",
+    wildcard_constraints:
+        direction="for|forward|plus|rev|reverse|minus"
     threads: 4
     params:
         effective_genome_size=config["mapping_stats"]["deeptools_coverage"][
@@ -25,6 +27,8 @@ rule deeptools_5prime_coverage:
         bai=fastq_process_align.get_crai,
     output:
         "results/deeptools/5prime_coverage/{sample}_{direction}.bw",
+    wildcard_constraints:
+        direction="for|forward|plus|rev|reverse|minus"
     threads: 4
     params:
         effective_genome_size=config["mapping_stats"]["deeptools_coverage"][
@@ -46,6 +50,8 @@ rule deeptools_3prime_coverage:
         bai=fastq_process_align.get_crai,
     output:
         "results/deeptools/3prime_coverage/{sample}_{direction}.bw",
+    wildcard_constraints:
+        direction="for|forward|plus|rev|reverse|minus"
     threads: 4
     params:
         effective_genome_size=config["mapping_stats"]["deeptools_coverage"][
