@@ -163,6 +163,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name + ("(5' ends)"),
             visibility="full",
             autoScale="on",
+            alwaysZero="on",
             maxHeightPixels="100:50:8",
             color=assembly_data["trackDb"]["bw"]["plus_color"]
         )
@@ -183,6 +184,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name + ("(5' ends)"),
             visibility="full",
             autoScale="on",
+            alwaysZero="on",
             maxHeightPixels="100:50:8",
             negateValues=assembly_data["trackDb"]["bw"]["negateValues_for_minus_strand"],
             color=assembly_data["trackDb"]["bw"]["minus_color"]
@@ -203,6 +205,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name + ("(3' ends)"),
             visibility="full",
             autoScale="on",
+            alwaysZero="on",
             maxHeightPixels="100:50:8",
             color=assembly_data["trackDb"]["bw"]["plus_color"]
         )
@@ -223,6 +226,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name + ("(3' ends)"),
             visibility="full",
             autoScale="on",
+            alwaysZero="on",
             maxHeightPixels="100:50:8",
             negateValues=assembly_data["trackDb"]["bw"]["negateValues_for_minus_strand"],
             color=assembly_data["trackDb"]["bw"]["minus_color"]
@@ -243,6 +247,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name,
             visibility="full",
             autoScale="on",
+            alwaysZero="on",
             maxHeightPixels="100:50:8",
             color=assembly_data["trackDb"]["bw"]["plus_color"]
         )
@@ -262,6 +267,7 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
             longLabel=bw_name,
             visibility="full",
             autoScale="on",
+            alwaysZero="on",
             maxHeightPixels="100:50:8",
             negateValues=assembly_data["trackDb"]["bw"]["negateValues_for_minus_strand"],
             color=assembly_data["trackDb"]["bw"]["minus_color"]
