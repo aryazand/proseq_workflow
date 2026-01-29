@@ -172,6 +172,45 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
         trackdb.add_tracks(bw_track)
         bw_track.add_params(group=bw_group_name)
         
+    for bw in snakemake.input.threeprime_plus_bw:
+        bw_basename=os.path.basename(bw)
+        bw_name=os.path.splitext(bw_basename)[0]
+
+        bw_track = trackhub.Track(
+            name=bw_name + "_threeprime",
+            tracktype="bigWig",
+            source=os.path.abspath(bw),
+            shortLabel=bw_name + ("(3')"),
+            longLabel=bw_name + ("(3' ends)"),
+            visibility="full",
+            autoScale="on",
+            maxHeightPixels="100:50:8",
+            color=assembly_data["trackDb"]["bw"]["plus_color"]
+        )
+        
+        trackdb.add_tracks(bw_track)
+        bw_track.add_params(group=bw_group_name)
+
+
+    for bw in snakemake.input.threeprime_minus_bw:
+        bw_basename=os.path.basename(bw)
+        bw_name=os.path.splitext(bw_basename)[0]
+
+        bw_track = trackhub.Track(
+            name=bw_name + "_threeprime",
+            tracktype="bigWig",
+            source=os.path.abspath(bw),
+            shortLabel=bw_name + ("(3')"),
+            longLabel=bw_name + ("(3' ends)"),
+            visibility="full",
+            autoScale="on",
+            maxHeightPixels="100:50:8",
+            negateValues=assembly_data["trackDb"]["bw"]["negateValues_for_minus_strand"],
+            color=assembly_data["trackDb"]["bw"]["minus_color"]
+        )
+
+        trackdb.add_tracks(bw_track)
+        bw_track.add_params(group=bw_group_name)
 
     for bw in snakemake.input.plus_bw:
         bw_basename=os.path.basename(bw)

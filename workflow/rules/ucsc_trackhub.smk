@@ -120,6 +120,14 @@ rule ucsc_trackhub:
             "results/deeptools/5prime_coverage/{sample}_reverse.bw",
             sample=fastq_process_align.samples.index,
         ),
+        threeprime_plus_bw=lambda wildcards: expand(
+            "results/deeptools/3prime_coverage/{sample}_forward.bw",
+            sample=fastq_process_align.samples.index,
+        ),
+        threeprime_minus_bw=lambda wildcards: expand(
+            "results/deeptools/3prime_coverage/{sample}_reverse.bw",
+            sample=fastq_process_align.samples.index,
+        ),
         plus_bw=lambda wildcards: expand(
             "results/deeptools/coverage/{sample}_forward.bw",
             sample=fastq_process_align.samples.index,
