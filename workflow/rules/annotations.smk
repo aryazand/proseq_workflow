@@ -1,6 +1,6 @@
 rule stringtie:
     input:
-        bam=fastq_process_align.get_bam_2,
+        bam=fastq_process_align.get_cram,
     output:
         "results/stringtie/{sample}.gtf",
     container:

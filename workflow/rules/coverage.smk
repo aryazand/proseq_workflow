@@ -1,7 +1,7 @@
 rule deeptools_coverage:
     input:
-        bam=fastq_process_align.get_bam_2,
-        bai=fastq_process_align.get_bai,
+        bam=fastq_process_align.get_cram,
+        bai=fastq_process_align.get_crai,
     output:
         "results/deeptools/coverage/{sample}_{direction}.bw",
     threads: 4
@@ -18,10 +18,11 @@ rule deeptools_coverage:
     wrapper:
         "v7.0.0/bio/deeptools/bamcoverage"
 
+
 rule deeptools_5prime_coverage:
     input:
-        bam=fastq_process_align.get_bam_2,
-        bai=fastq_process_align.get_bai,
+        bam=fastq_process_align.get_cram,
+        bai=fastq_process_align.get_crai,
     output:
         "results/deeptools/5prime_coverage/{sample}_{direction}.bw",
     threads: 4
